@@ -21,7 +21,7 @@ export const SLIDES: SlideMeta[] = [
     id: 'slide-01',
     index: 1,
     title: 'Model Context Protocol (MCP)',
-    subtitle: 'Technical Seminar',
+    subtitle: '', // No kicker on the title slide — the topbar already says it.
     tagline: 'Architecture and Contextual Interoperability for AI Systems',
     presenter: 'Prasanth P · KNP23CS086',
     affiliation: 'S7 CSB · Roll No. 26',

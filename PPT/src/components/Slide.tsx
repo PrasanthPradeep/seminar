@@ -25,7 +25,7 @@ export function Slide({ slide }: SlideProps) {
             alt="College of Engineering Karunagappally logo"
           />
         )}
-        <p className="slide-kicker">{slide.subtitle}</p>
+        {slide.subtitle && <p className="slide-kicker">{slide.subtitle}</p>}
         <h2 className="slide-title">{slide.title}</h2>
         {slide.tagline ? (
           <p className="slide-tagline">{slide.tagline}</p>

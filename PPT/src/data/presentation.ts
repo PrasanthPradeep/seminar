@@ -8,6 +8,8 @@ export interface SlideMeta {
   tagline?: string
   presenter?: string
   affiliation?: string
+  // Title-slide only: logo image (path relative to the served root).
+  logo?: string
 }
 
 // Milestone 1 skeleton: titles only, no real content yet.
@@ -23,6 +25,7 @@ export const SLIDES: SlideMeta[] = [
     tagline: 'Architecture and Contextual Interoperability for AI Systems',
     presenter: 'Prasanth P · KNP23CS086',
     affiliation: 'Dept. of CSE, College of Engineering Karunagappally',
+    logo: 'logo/college-logo.png',
   },
   },
   { id: 'slide-02', index: 2, title: 'Introduction', subtitle: '02 — Introduction' },

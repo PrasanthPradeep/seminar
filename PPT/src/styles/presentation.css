@@ -124,6 +124,13 @@
 }
 
 /* Title-slide elements (slide 01) */
+.slide-logo {
+  height: clamp(56px, 10vh, 88px);
+  width: auto;
+  max-width: 100%;
+  margin-bottom: 24px;
+}
+
 .slide-tagline {
   font-size: clamp(20px, 2.4vw, 26px);
   line-height: 1.4;

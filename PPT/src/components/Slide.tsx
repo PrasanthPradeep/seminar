@@ -18,6 +18,13 @@ export function Slide({ slide }: SlideProps) {
       aria-label={`Slide ${slide.index} of 22: ${slide.title}`}
     >
       <div className="slide-inner">
+        {slide.logo && (
+          <img
+            className="slide-logo"
+            src={slide.logo}
+            alt="College of Engineering Karunagappally logo"
+          />
+        )}
         <p className="slide-kicker">{slide.subtitle}</p>
         <h2 className="slide-title">{slide.title}</h2>
         {slide.tagline ? (

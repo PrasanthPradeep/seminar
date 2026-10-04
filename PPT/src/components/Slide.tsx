@@ -5,7 +5,8 @@ interface SlideProps {
 }
 
 /**
- * 16:9-ish viewport slide. Milestone 1 = placeholder content only.
+ * 16:9-ish viewport slide. Milestone 1 = placeholder content only,
+ * except slide 01 which carries the real seminar title.
  * Real layouts (TitleSlide, BulletSlide, …) arrive in Milestone 2/4.
  */
 export function Slide({ slide }: SlideProps) {
@@ -19,7 +20,22 @@ export function Slide({ slide }: SlideProps) {
       <div className="slide-inner">
         <p className="slide-kicker">{slide.subtitle}</p>
         <h2 className="slide-title">{slide.title}</h2>
-        <p className="slide-placeholder">Content will be added here.</p>
+        {slide.tagline ? (
+          <p className="slide-tagline">{slide.tagline}</p>
+        ) : (
+          <p className="slide-placeholder">Content will be added here.</p>
+        )}
+        {slide.presenter && (
+          <p className="slide-presenter">
+            {slide.presenter}
+            {slide.affiliation && (
+              <>
+                <br />
+                <span className="slide-affiliation">{slide.affiliation}</span>
+              </>
+            )}
+          </p>
+        )}
       </div>
     </section>
   )

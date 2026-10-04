@@ -3,6 +3,11 @@ export interface SlideMeta {
   index: number // 1-based
   title: string
   subtitle: string
+  // Title-slide only: prominent tagline under the title, replacing the
+  // "Content will be added here." placeholder.
+  tagline?: string
+  presenter?: string
+  affiliation?: string
 }
 
 // Milestone 1 skeleton: titles only, no real content yet.
@@ -10,7 +15,16 @@ export interface SlideMeta {
 export const TOTAL_SLIDES = 22
 
 export const SLIDES: SlideMeta[] = [
-  { id: 'slide-01', index: 1, title: 'Title', subtitle: '01 — Title' },
+  {
+    id: 'slide-01',
+    index: 1,
+    title: 'Model Context Protocol (MCP)',
+    subtitle: 'Technical Seminar',
+    tagline: 'Architecture and Contextual Interoperability for AI Systems',
+    presenter: 'Prasanth P · KNP23CS086',
+    affiliation: 'Dept. of CSE, College of Engineering Karunagappally',
+  },
+  },
   { id: 'slide-02', index: 2, title: 'Introduction', subtitle: '02 — Introduction' },
   { id: 'slide-03', index: 3, title: 'Core Concepts', subtitle: '03 — Core Concepts' },
   { id: 'slide-04', index: 4, title: 'Problem Statement', subtitle: '04 — Problem Statement' },

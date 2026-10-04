@@ -123,6 +123,27 @@
   margin: 0;
 }
 
+/* Title-slide elements (slide 01) */
+.slide-tagline {
+  font-size: clamp(20px, 2.4vw, 26px);
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.slide-presenter {
+  margin: 36px 0 0;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.slide-affiliation {
+  font-size: 15px;
+  color: rgba(43, 38, 34, 0.7);
+}
+
 /* Stage: positions the invisible edge zones over the scroll viewport */
 .stage {
   position: relative;

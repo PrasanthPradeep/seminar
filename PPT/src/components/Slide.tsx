@@ -1,6 +1,7 @@
 import type { SlideMeta } from '../data/presentation'
 import { AgentFlow } from './AgentFlow'
 import {
+  AlgorithmDiagram,
   ArchitectureDiagram,
   ExistingDiagram,
   HubDiagram,
@@ -25,6 +26,7 @@ import {
 
 interface SlideProps {
   slide: SlideMeta
+  isActive: boolean
 }
 
 function Visual({ name }: { name: NonNullable<SlideMeta['visual']> }) {
@@ -35,6 +37,8 @@ function Visual({ name }: { name: NonNullable<SlideMeta['visual']> }) {
       return <ExistingDiagram />
     case 'architecture':
       return <ArchitectureDiagram />
+    case 'algorithm':
+      return <AlgorithmDiagram />
     case 'workflow':
       return <WorkflowDiagram />
     case 'hub':
@@ -56,9 +60,11 @@ function Visual({ name }: { name: NonNullable<SlideMeta['visual']> }) {
  * - Content slides pin kicker + title to the top; the body stays
  *   vertically centered in the remaining space.
  */
-export function Slide({ slide }: SlideProps) {
+export function Slide({ slide, isActive }: SlideProps) {
   const isTitle = slide.index === 1
   const showSplit = slide.visual === 'agent-flow' && slide.bullets
+  const showArchitectureSplit = slide.visual === 'architecture' && slide.bullets
+  const showWorkflowSplit = slide.visual === 'workflow' && slide.bullets
   const dense =
     !!slide.table ||
     !!slide.references ||
@@ -68,12 +74,14 @@ export function Slide({ slide }: SlideProps) {
     (slide.bullets?.length ?? 0) > 6 ||
     (slide.steps?.length ?? 0) > 6 ||
     (slide.stats?.length ?? 0) > 4
+  const split = showSplit || showArchitectureSplit || showWorkflowSplit
 
   if (isTitle) {
     return (
       <section
         id={`slide-${slide.index}`}
         data-index={slide.index}
+        data-active={isActive}
         className="slide slide--title"
         aria-label={`Slide ${slide.index} of 22: ${slide.title}`}
       >
@@ -108,10 +116,11 @@ export function Slide({ slide }: SlideProps) {
     <section
       id={`slide-${slide.index}`}
       data-index={slide.index}
+      data-active={isActive}
       className={
         'slide slide--content' +
-        (showSplit ? ' slide--wide' : '') +
-        (dense && !showSplit ? ' slide--dense' : '')
+        (split ? ' slide--wide' : '') +
+        (dense && !split ? ' slide--dense' : '')
       }
       aria-label={`Slide ${slide.index} of 22: ${slide.title}`}
     >
@@ -128,6 +137,28 @@ export function Slide({ slide }: SlideProps) {
               ))}
             </ul>
             <AgentFlow />
+          </div>
+        ) : showArchitectureSplit ? (
+          <div className="slide-split slide-split--architecture">
+            <ul className="slide-bullets">
+              {slide.bullets!.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
+            </ul>
+            <div className="slide-visual">
+              <ArchitectureDiagram />
+            </div>
+          </div>
+        ) : showWorkflowSplit ? (
+          <div className="slide-split slide-split--workflow">
+            <ul className="slide-bullets">
+              {slide.bullets!.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
+            </ul>
+            <div className="slide-visual">
+              <WorkflowDiagram />
+            </div>
           </div>
         ) : (
           <>

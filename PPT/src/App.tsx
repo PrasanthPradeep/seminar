@@ -27,7 +27,11 @@ export default function App() {
       <div className="stage">
         <main ref={containerRef} className="presentation">
           {SLIDES.map((slide) => (
-            <Slide key={slide.id} slide={slide} />
+            <Slide
+              key={slide.id}
+              slide={slide}
+              isActive={slide.index === currentSlide}
+            />
           ))}
         </main>
 

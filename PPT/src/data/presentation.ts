@@ -29,6 +29,7 @@ export type SlideVisual =
   | 'mxn'
   | 'existing'
   | 'architecture'
+  | 'algorithm'
   | 'workflow'
   | 'hub'
   | 'threat'
@@ -247,18 +248,7 @@ export const SLIDES: SlideMeta[] = [
     index: 11,
     title: 'Algorithm — MCP-Based Tool Invocation',
     subtitle: '11 — Core Process',
-    steps: [
-      'Receive the user request',
-      'Identify the required capability',
-      'Discover available MCP tools',
-      'Select the appropriate tool',
-      'Construct the MCP request',
-      'Send it through the MCP client',
-      'Server executes the tool',
-      'Return the result',
-      'LLM processes the result',
-      'Generate the final response',
-    ],
+    visual: 'algorithm',
   },
   {
     id: 'slide-12',

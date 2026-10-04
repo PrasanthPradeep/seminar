@@ -125,10 +125,10 @@
 
 /* Title-slide elements (slide 01) */
 .slide-logo {
-  height: clamp(56px, 10vh, 88px);
+  height: clamp(44px, 7vh, 64px);
   width: auto;
   max-width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .slide-tagline {

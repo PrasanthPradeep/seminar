@@ -1,0 +1,40 @@
+:root {
+  /* Claude brand palette */
+  --crail: #c15f3c; /* Rust/Terracotta — primary signature hue */
+  --cloudy: #b1ada1; /* Warm gray */
+  --pampas: #f4f3ee; /* Off-white / cream */
+  --white: #ffffff;
+  --peach: #de7356; /* Alternative accent variant */
+  /* Derived warm charcoal for readable body text on cream
+     (palette has no dark tone) */
+  --ink: #2b2622;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--pampas);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font: inherit;
+}
+
+::selection {
+  background: var(--peach);
+  color: var(--white);
+}

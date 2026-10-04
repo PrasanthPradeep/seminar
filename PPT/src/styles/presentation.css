@@ -1,0 +1,179 @@
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--pampas);
+}
+
+/* Top bar: minimal, unobtrusive */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  border-bottom: 1px solid rgba(177, 173, 161, 0.45);
+  background: var(--pampas);
+}
+
+.topbar-title {
+  color: var(--crail);
+  font-weight: 600;
+}
+
+.topbar-counter {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+/* Thin progress line under the top bar */
+.progress-track {
+  height: 3px;
+  background: rgba(177, 173, 161, 0.35);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--crail), var(--peach));
+  transition: width 0.25s ease;
+}
+
+/* Core engine: snap-scrolling viewport.
+   - `proximity` (not `mandatory`) so small scrolls don't violently yank
+     to the next slide; snap only engages when close to a slide edge.
+   - No `scroll-behavior: smooth` here on purpose: it makes native
+     wheel/trackpad scrolling fight the snap and feel jumpy.
+     Smooth motion is handled by the JS eased glide for button/keyboard
+     navigation instead. */
+.presentation {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y proximity;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* While the controller is gliding to a slide, suspend snapping so the
+   browser doesn't interrupt the animation mid-flight. */
+.presentation.is-programmatic {
+  scroll-snap-type: none;
+}
+
+.slide {
+  height: 100%;
+  min-height: 100%;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pampas);
+}
+
+.slide-inner {
+  text-align: center;
+  padding: 48px;
+  max-width: 900px;
+}
+
+.slide-kicker {
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.slide-title {
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.1;
+  margin: 0 0 16px;
+  color: var(--crail);
+}
+
+/* Content color scale (for Milestone 4 slide bodies):
+   - Primary body / bullets : var(--ink)    (~13.5:1 on Pampas — main reading text)
+   - Secondary text          : ink at 70%   (Cloudy alone is ~2:1, too faint for small text)
+   - Emphasis / key numbers  : var(--crail)  (sparingly, so it stays signature)
+   - Highlights / links      : var(--peach)
+   - Hairlines / dividers    : var(--cloudy)  (decorative only, never small text) */
+.slide-body {
+  color: var(--ink);
+}
+
+.slide-secondary {
+  color: rgba(43, 38, 34, 0.7);
+}
+
+.slide-emphasis {
+  color: var(--crail);
+}
+
+.slide-placeholder {
+  font-size: 20px;
+  color: var(--cloudy);
+  margin: 0;
+}
+
+/* Stage: positions the invisible edge zones over the scroll viewport */
+.stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.stage .presentation {
+  flex: 1;
+}
+
+/* Invisible full-height edge navigation: purely transparent click zones,
+   nothing rendered visually. */
+.edge-nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: clamp(88px, 10vw, 160px);
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 5;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.edge-left {
+  left: 0;
+}
+
+.edge-right {
+  right: 0;
+}
+
+.edge-nav:disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+.edge-nav:focus {
+  outline: none;
+}
+
+.edge-nav:focus-visible {
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .edge-nav {
+    width: clamp(64px, 18vw, 96px);
+  }
+}

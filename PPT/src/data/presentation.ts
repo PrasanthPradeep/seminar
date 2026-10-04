@@ -24,7 +24,7 @@ export const SLIDES: SlideMeta[] = [
     subtitle: 'Technical Seminar',
     tagline: 'Architecture and Contextual Interoperability for AI Systems',
     presenter: 'Prasanth P · KNP23CS086',
-    affiliation: 'Dept. of CSE, College of Engineering Karunagappally',
+    affiliation: 'S7 CSB · Roll No. 26',
     logo: 'logo/college-logo.png',
   },
   { id: 'slide-02', index: 2, title: 'Introduction', subtitle: '02 — Introduction' },

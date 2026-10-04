@@ -30,18 +30,18 @@ export function MxnDiagram() {
         <div className="d-panel">
           <p className="d-panel-title">Without MCP</p>
           <div className="d-mesh d-mesh--live" aria-hidden="true">
-            <span>Agent A</span><i>custom</i><span>Tool 1</span>
-            <span>Agent A</span><i>custom</i><span>Tool 2</span>
-            <span>Agent B</span><i>custom</i><span>Tool 1</span>
-            <span>Agent B</span><i>custom</i><span>Tool 2</span>
+            <span>Agent A</span><i>→</i><em>custom API</em><i>→</i><span>Tool 1</span>
+            <span>Agent A</span><i>→</i><em>custom API</em><i>→</i><span>Tool 2</span>
+            <span>Agent B</span><i>→</i><em>custom API</em><i>→</i><span>Tool 1</span>
+            <span>Agent B</span><i>→</i><em>custom API</em><i>→</i><span>Tool 2</span>
           </div>
           <p className="d-formula d-formula--bad">M × N</p>
         </div>
         <div className="d-panel d-panel--accent">
           <p className="d-panel-title">With MCP</p>
           <div className="d-mesh d-mesh--clean" aria-hidden="true">
-            <span>Agents</span><i>→</i><span>MCP</span>
-            <span>MCP</span><i>→</i><span>Tools</span>
+            <span>Agents</span><i>→</i><em>MCP</em><i>→</i><span>Tools</span>
+            <span>MCP</span><i>→</i><em>protocol</em><i>→</i><span>Tools</span>
           </div>
           <p className="d-formula">M + N</p>
         </div>

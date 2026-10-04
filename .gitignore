@@ -1,3 +1,6 @@
 node_modules/
 dist/
 assets/
+
+# Verification screenshots produced by PPT/scripts/shoot.mjs
+PPT/shots/

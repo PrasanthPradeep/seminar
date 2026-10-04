@@ -19,7 +19,7 @@ export default defineConfig({
         description: 'Technical seminar presentation: Model Context Protocol — Architecture and Contextual Interoperability for AI Systems.',
         start_url: '.',
         display: 'standalone',
-        orientation: 'landscape',
+        orientation: 'any',
         background_color: '#F4F3EE',
         theme_color: '#C15F3C',
         icons: [

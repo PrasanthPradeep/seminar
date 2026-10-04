@@ -4,6 +4,11 @@
   display: flex;
   flex-direction: column;
   background: var(--pampas);
+  /* Keep content clear of notches and home indicators. */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
 }
 
 /* Top bar: minimal, unobtrusive */
@@ -110,10 +115,41 @@
 }
 
 /* Content slides: kicker + title pinned top, body centered below. */
+/* The slide itself is a fixed-height clipping frame — it must NOT be
+   transformed, or `scale()` would shrink the frame too and the content
+   would no longer fill it. Only the auto-height content column inside is
+   scaled, so `--slide-fit × natural === available` exactly. */
 .slide--content {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
+  overflow: hidden;
+}
+
+.slide-fit {
+  /* Must be AUTO height — never flex:1 / min-height:0 — otherwise it would be
+     clamped to the slide and its scrollHeight would stop reporting the true
+     natural content height that the scale is calculated from. */
+  display: flex;
+  flex-direction: column;
+  /* Scale from the top so the title stays put and the body fills what's left. */
+  transform-origin: top center;
+  transform: scale(var(--slide-fit, 1));
+}
+
+/* Likewise auto height, so the column grows to fit whatever it holds. */
+.slide-fit .slide-body {
+  flex: 0 0 auto;
+}
+
+/* Title slide centres on both axes, so scale from the middle. */
+.slide--title {
+  overflow: hidden;
+}
+
+.slide--title .slide-inner {
+  transform: scale(var(--slide-fit, 1));
+  transform-origin: center center;
 }
 
 .slide-header {
@@ -133,8 +169,11 @@
   justify-content: flex-start;
   text-align: center;
   padding: 24px 48px 40px;
-  overflow-y: auto;
-  scrollbar-width: thin;
+  /* Deliberately NOT a scroll container. A nested scroller here would
+     swallow touch swipes and make the user scroll *inside* a slide instead
+     of moving to the next one. `useSlideFit` guarantees the content is
+     scaled to fit, so this only ever clips if that guarantee is broken. */
+  overflow: hidden;
 }
 
 .slide--wide .slide-body {
@@ -168,7 +207,7 @@
 }
 
 .slide-kicker {
-  font-size: 16px;
+  font-size: clamp(12px, 1.1vh + 0.5vw, 16px);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--ink);
@@ -177,7 +216,9 @@
 }
 
 .slide-title {
-  font-size: clamp(44px, 6vw, 72px);
+  /* Height-aware so a short viewport (landscape phone) shrinks the title
+     instead of overflowing. Unchanged at desktop/projector sizes. */
+  font-size: clamp(28px, 3.4vh + 2.4vw, 72px);
   line-height: 1.1;
   margin: 0 0 16px;
   color: var(--crail);
@@ -213,14 +254,14 @@
   display: inline-block;
   text-align: left;
   margin: 8px 0 0;
-  padding-left: 28px;
-  font-size: clamp(22px, 2.6vw, 28px);
+  padding-left: clamp(16px, 1.6vw, 28px);
+  font-size: clamp(17px, 1.9vh + 1.1vw, 28px);
   line-height: 1.45;
   color: var(--ink);
 }
 
 .slide-bullets li {
-  margin-bottom: 14px;
+  margin-bottom: clamp(8px, 1.4vh, 14px);
 }
 
 .slide-bullets li:last-child {
@@ -244,7 +285,7 @@
   margin: 0;
   flex: 1;
   min-width: 0;
-  font-size: clamp(20px, 2.2vw, 24px);
+  font-size: clamp(17px, 1.6vh + 1vw, 24px);
 }
 
 .slide-split--architecture {
@@ -258,7 +299,7 @@
 .slide-split--architecture .slide-bullets {
   flex: 0 1 45%;
   max-width: 420px;
-  font-size: clamp(18px, 1.6vw, 22px);
+  font-size: clamp(16px, 1.4vh + 0.8vw, 22px);
 }
 
 .slide-split--architecture .slide-visual {
@@ -277,7 +318,7 @@
 .slide-split--workflow .slide-bullets {
   flex: 0 1 32%;
   max-width: 300px;
-  font-size: clamp(18px, 1.6vw, 22px);
+  font-size: clamp(15px, 1.3vh + 0.8vw, 22px);
   text-align: left;
 }
 
@@ -419,12 +460,12 @@
 }
 
 .slide--dense .slide-title {
-  font-size: clamp(44px, 6vw, 72px);
+  font-size: clamp(28px, 3.2vh + 2.2vw, 72px);
   margin-bottom: 12px;
 }
 
 .slide--dense .slide-bullets {
-  font-size: clamp(19px, 2vw, 23px);
+  font-size: clamp(16px, 1.7vh + 1vw, 23px);
 }
 
 /* Two-column bullet lists for 6+ items. */
@@ -2161,6 +2202,16 @@
 }
 
 @media (max-width: 800px) {
+  .topbar {
+    padding: 6px 12px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+
+  .progress-track {
+    height: 2px;
+  }
+
   .slide--title .slide-inner {
     padding: 24px;
   }
@@ -2628,4 +2679,325 @@
 
 .corner-nav:focus-visible {
   outline: none;
+}
+
+/* ==========================================================================
+   Small-screen support
+   --------------------------------------------------------------------------
+   Strategy: fluid type (vh + vw clamps) keeps things readable, and
+   `useSlideFit` scales any slide down as a final guarantee that nothing is
+   ever clipped, overlapped, or needs an in-slide scrollbar.
+   ========================================================================== */
+
+/* The scale guarantees the column fits the slide box, but it never
+   guarantees it fits *horizontally*: a wide diagram scaled down still keeps
+   its aspect ratio and can be wider than the viewport once the slide's own
+   side padding is accounted for. Clamp the scale by whichever axis runs out
+   first so wide visuals shrink to fit the width too. */
+@media (max-width: 800px) {
+  .slide-fit {
+    /* Narrow viewports need proportionally more vertical room per unit of
+       width, so trade a little scale for readability. */
+    max-width: 100%;
+  }
+
+  .slide-visual {
+    max-width: 100%;
+  }
+
+  .diagram {
+    max-width: 100%;
+  }
+}
+
+/* Landscape phones: width is plentiful but height is tiny (~390px), so the
+   split layouts must STAY side-by-side — stacking them would double the
+   height and force the auto-fit to shrink everything into illegibility. */
+@media (max-width: 950px) and (orientation: landscape) {
+  .slide-split,
+  .slide-split--architecture,
+  .slide-split--workflow {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .slide-split--architecture .slide-bullets {
+    flex: 0 1 30%;
+    max-width: 220px;
+  }
+
+  .slide-split--workflow .slide-bullets {
+    flex: 0 1 26%;
+    max-width: 190px;
+  }
+
+  /* The sequence diagram needs room; shrink its own metrics to match. */
+  .d-wf-msg {
+    padding: 9px 0 8px;
+  }
+
+  .d-wf-msg-label {
+    font-size: 13px;
+  }
+
+  .d-wf-msg-num {
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+  }
+
+  .d-wf-box {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .d-wf-role {
+    font-size: 10px;
+  }
+
+  .d-wf-llm {
+    padding: 7px 14px;
+  }
+
+  .d-wf-llm-title {
+    font-size: 14px;
+  }
+
+  .d-wf-llm-text {
+    font-size: 11px;
+  }
+
+  .d-wf-annot {
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+
+  .slide-header {
+    padding: 22px 20px 0;
+  }
+
+  .slide-body {
+    padding: 6px 20px 14px;
+  }
+}
+
+/* Portrait phones: stack the splits (already done at 800px) and tighten the
+   chrome so the content gets the height it needs. */
+@media (max-width: 800px) and (orientation: portrait) {
+  .slide-header {
+    padding: 26px 16px 0;
+  }
+
+  .slide-body {
+    padding: 6px 16px 18px;
+  }
+
+  .slide-split--architecture .slide-bullets,
+  .slide-split--workflow .slide-bullets {
+    flex: 1 1 auto;
+    max-width: none;
+  }
+}
+
+/* Any short viewport (landscape phone, small laptop window, split screen):
+   reclaim vertical space everywhere it is safe to do so. */
+@media (max-height: 620px) {
+  .slide-header {
+    padding-top: 26px;
+  }
+
+  /* ID-scoped header rules above would otherwise outrank this one. */
+  #slide-3 .slide-header,
+  #slide-9 .slide-header {
+    padding-top: 20px;
+  }
+
+  .slide-body {
+    padding-top: 6px;
+    padding-bottom: 16px;
+  }
+
+  .slide-title {
+    margin-bottom: 10px;
+  }
+
+  /* Touch targets for the invisible corner navigation. */
+  .corner-tl,
+  .corner-tr {
+    width: 22vw;
+    min-width: 84px;
+    height: 30%;
+  }
+
+  .corner-bl,
+  .corner-br {
+    height: 14%;
+  }
+
+  /* Metrics that are authored large and dominate slide height. */
+  .slide-logo {
+    height: clamp(32px, 9vh, 48px);
+    margin-bottom: 10px;
+  }
+
+  .slide-presenter {
+    margin-top: 16px;
+  }
+
+  .diagram {
+    margin-top: 4px;
+  }
+
+  .d-calc {
+    padding: 10px 16px 12px;
+  }
+
+  .d-architecture-host {
+    padding: 10px 10px 14px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Very short viewports (landscape phones ~390px tall).
+   The auto-fit would otherwise have to scale these slides down to ~0.45 and
+   the text becomes unreadable. These rules cut the intrinsic height of the
+   tallest diagrams so the fit factor stays legible.
+   -------------------------------------------------------------------------- */
+@media (max-height: 480px) {
+  .slide-header {
+    padding: 12px 16px 0;
+  }
+
+  .slide-body {
+    padding: 2px 14px 8px;
+  }
+
+  /* Bullets and quotes: tighter leading and margins. */
+  .slide-bullets li {
+    margin-bottom: 4px;
+  }
+
+  .slide-quote {
+    margin-top: 8px;
+    padding: 6px 14px;
+    line-height: 1.3;
+  }
+
+  .slide-footnote {
+    margin-top: 6px;
+    line-height: 1.3;
+  }
+
+  /* Generic diagram boxes. */
+  .d-node {
+    padding: 5px 12px;
+    gap: 1px;
+  }
+
+  .d-panel {
+    padding: 10px 14px;
+  }
+
+  .d-formula {
+    line-height: 1.15;
+  }
+
+  .d-calc {
+    gap: 6px;
+    margin-top: 6px;
+    padding: 8px 14px 10px;
+  }
+
+  /* Hub (slide 06): the four spokes are the tall part. */
+  .d-hub-spokes-horizontal {
+    gap: 14px;
+    margin-top: 10px;
+    padding-top: 12px;
+  }
+
+  .d-hub-spoke-vertical {
+    gap: 3px;
+  }
+
+  /* Architecture (slide 09). */
+  .d-architecture-lanes {
+    gap: 12px;
+  }
+
+  .d-architecture-host {
+    padding: 6px 10px 8px;
+  }
+
+  .d-architecture-server {
+    gap: 6px;
+    padding: 6px 10px 8px;
+  }
+
+  .d-architecture-protocol {
+    min-height: 26px;
+  }
+
+  .d-architecture-protocol-arrow {
+    height: 14px;
+  }
+
+  /* Algorithm rail (slide 11). */
+  .d-algorithm-flow {
+    --alg-badge: 24px;
+    --alg-rail: 38px;
+    --alg-gutter: 104px;
+    --alg-gap: 4px;
+    --alg-step-h: 30px;
+    --alg-label-h: 22px;
+  }
+
+  /* Workflow sequence (slide 12). */
+  .d-wf-msg {
+    padding: 5px 0 4px;
+  }
+
+  .d-wf {
+    --wf-drop: 16px;
+  }
+
+  .d-wf-llm-row {
+    margin-top: var(--wf-drop);
+  }
+
+  .d-wf-box {
+    padding: 5px 10px;
+  }
+
+  .d-wf-annot {
+    padding: 3px 9px;
+  }
+
+  /* Lists of cards/chips/chains. */
+  .primitive-cards {
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .stat-chips {
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .chain {
+    padding: 6px 12px;
+  }
+
+  .slide-columns {
+    gap: 16px;
+    margin-top: 4px;
+  }
+
+  .card {
+    padding: 8px 12px;
+  }
+
+  .step {
+    padding: 6px 12px;
+  }
 }

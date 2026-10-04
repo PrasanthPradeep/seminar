@@ -1,4 +1,5 @@
 import type { SlideMeta } from '../data/presentation'
+import { useSlideFit } from '../hooks/useSlideFit'
 import { AgentFlow } from './AgentFlow'
 import {
   AlgorithmDiagram,
@@ -62,6 +63,8 @@ function Visual({ name }: { name: NonNullable<SlideMeta['visual']> }) {
  */
 export function Slide({ slide, isActive }: SlideProps) {
   const isTitle = slide.index === 1
+  // Re-measure whenever this slide becomes the visible one.
+  const fitRef = useSlideFit<HTMLElement>(isActive)
   const showSplit = slide.visual === 'agent-flow' && slide.bullets
   const showArchitectureSplit = slide.visual === 'architecture' && slide.bullets
   const showWorkflowSplit = slide.visual === 'workflow' && slide.bullets
@@ -80,6 +83,7 @@ export function Slide({ slide, isActive }: SlideProps) {
     return (
       <section
         id={`slide-${slide.index}`}
+        ref={fitRef}
         data-index={slide.index}
         data-active={isActive}
         className="slide slide--title"
@@ -115,6 +119,7 @@ export function Slide({ slide, isActive }: SlideProps) {
   return (
     <section
       id={`slide-${slide.index}`}
+      ref={fitRef}
       data-index={slide.index}
       data-active={isActive}
       className={
@@ -124,11 +129,12 @@ export function Slide({ slide, isActive }: SlideProps) {
       }
       aria-label={`Slide ${slide.index} of 22: ${slide.title}`}
     >
-      <header className="slide-header">
-        {slide.subtitle && <p className="slide-kicker">{slide.subtitle}</p>}
-        <h2 className="slide-title">{slide.title}</h2>
-      </header>
-      <div className="slide-body">
+      <div className="slide-fit">
+        <header className="slide-header">
+          {slide.subtitle && <p className="slide-kicker">{slide.subtitle}</p>}
+          <h2 className="slide-title">{slide.title}</h2>
+        </header>
+        <div className="slide-body">
         {showSplit ? (
           <div className="slide-split">
             <ul className="slide-bullets">
@@ -203,6 +209,7 @@ export function Slide({ slide, isActive }: SlideProps) {
         )}
         {slide.quote && <Quote text={slide.quote} />}
         {slide.footnote && <Footnote text={slide.footnote} />}
+        </div>
       </div>
     </section>
   )

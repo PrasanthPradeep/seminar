@@ -23,11 +23,20 @@ body,
   margin: 0;
 }
 
+html {
+  /* Stop iOS from inflating text in landscape, which would break the
+     fixed slide layout. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   background: var(--pampas);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
+  /* Stop pull-to-refresh and rubber-banding from hijacking slide swipes. */
+  overscroll-behavior: none;
 }
 
 button {

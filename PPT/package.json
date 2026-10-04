@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify:fit": "npm run build && node scripts/serve.mjs ./verify-fit.mjs",
+    "verify:swipe": "npm run build && node scripts/serve.mjs ./verify-swipe.mjs",
+    "verify:mesh": "npm run build && node scripts/serve.mjs ./verify-mesh.mjs",
+    "shots": "npm run build && node scripts/serve.mjs ./shoot.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -16,6 +20,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "playwright": "^1.49.1",
     "typescript": "^5.5.3",
     "vite": "^6.0.0",
     "vite-plugin-pwa": "^2.0.0"

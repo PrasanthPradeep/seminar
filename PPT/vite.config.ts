@@ -44,6 +44,7 @@ export default defineConfig({
     }),
   ],
   server: {
+    allowedHosts: ['sassy-duly-flock.ngrok-free.dev'],
     watch: {
       usePolling: true,
     },

@@ -81,6 +81,10 @@
   text-align: center;
   padding: 48px;
   max-width: 900px;
+  /* Chrome compensation: the topbar + progress (~48px) push the stage
+     below true viewport center, so lift content by half of that to land
+     on the screen's actual vertical middle. */
+  transform: translateY(-24px);
 }
 
 .slide-kicker {

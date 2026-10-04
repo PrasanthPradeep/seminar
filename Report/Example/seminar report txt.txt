@@ -1,0 +1,571 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{cite}
+\usepackage{framed}
+\usepackage{a4wide}
+\usepackage{float}
+\usepackage{epsfig}
+\usepackage{longtable}
+\usepackage{enumerate}
+\usepackage{afterpage}
+\usepackage{multirow}
+\usepackage{ragged2e}
+\usepackage{gensymb}
+\usepackage{amsfonts} 
+\usepackage[left=3.5cm,top=1.5cm,right=3cm,bottom=4cm]{geometry}
+\usepackage{setspace}           
+\usepackage{float}
+\usepackage{txfonts}
+\usepackage{lipsum}
+
+\newcommand{\Usefont}[1]{\fontfamily{#1}\selectfont}
+
+\usepackage{lscape} % for landscape tables
+\renewcommand{\baselinestretch}{1.7} 
+
+\usepackage{blindtext}
+\usepackage{xpatch}
+\usepackage{url}
+\usepackage{leqno}
+\usepackage{subcaption}
+
+\linespread{1.5}
+\usepackage[intoc, english]{nomencl}
+\hyphenpenalty=5000
+\tolerance=1000
+\usepackage[nottoc]{tocbibind}
+\bibliographystyle{IEEEtran}
+\renewcommand{\bibname}{References}
+
+%*******************************************************************
+%                        Header and Footer   
+% This is not required in Technical reports submitted to CET ECE department.
+% Please leave it commented                       
+%*******************************************************************
+
+\fancyhead[L]{\small A Problem Analysis of Smart Home
+Automation: Toward Secure and
+Usable Communication-Based
+Authorization
+}
+%----------------- Header & Footer setup -----------------
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer
+
+% Header
+\renewcommand{\headrulewidth}{0pt} % remove header line
+\fancyhead[R]{\thepage} % page number at top-right
+
+% Footer
+\renewcommand{\footrulewidth}{0.1pt} % footer line thickness
+\fancyfoot[L]{\small Department of CSE, College of Engineering Karunagappally}
+
+% Apply same style to 'plain' pages (ToC, LoF, chapters, etc.)
+\fancypagestyle{plain}{%
+  \fancyhf{} % clear
+  \fancyhead[R]{\thepage} % page number top-right
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyfoot[L]{\small Department of CSE, College of Engineering Karunagappally}
+  \renewcommand{\footrulewidth}{0.1pt}
+}
+%*******************************************************************
+
+
+%*********************Figures*****************************
+% Save all figures in the folder figures and include them in your 
+% report using the command \includegraphics{figure-name}
+
+\graphicspath{{figures/}}
+
+% figure files can be in jpeg,jpg, png or pdf formats
+%*******************************************************************
+
+
+\begin{document}
+	
+	
+%****The entries in this section are to be filled in by the student with appropriate values *************
+
+% These values are used thoroughout the report 
+% please fill in the appropriate values
+
+\gdef \title{A Problem Analysis of Smart Home Automation: Toward Secure and Usable Communication-Based Authorization
+} % Seminar title
+\gdef \author {M H DEVANARAYANAN NAMPOOTHIRI}	 %student name
+\gdef \dept{Computer Science and Engineering} %Department
+\gdef \degree{Bachelor of Technology} %degree
+\gdef \branch{Computer Science and Engineering} %branch
+\gdef \college{College of Engineering}
+\gdef \collegeplace{Karunagappally}
+\gdef \rollno{KNP22CS078} %KTU Reg No
+\gdef \deptabbr{Dept.of CSE} %Dept name abbreviation
+
+\gdef \guide{SHABANA A.S} %Seminar guide
+\gdef \guidedes{Assistant Professor}%Seminar guide designation
+
+\gdef \guidesmall{Shabana A.S} %Seminar guide
+
+\gdef \semcordinatorA{SWATHI S}% Seminar coordinator 1 
+\gdef \semcordinatorAdes{Assistant Professor}% Seminar coordinator 1 designation
+
+\gdef \semcordinatorB{Prof. Seminar coordinator 2} % Seminar coordinator 2 
+\gdef \semcordinatorBdes{Assistant Professor}% Seminar coordinator 2 designation
+
+\gdef \hod{Dr. SMITHA P} %Head of Department
+\gdef \hoddes{Associate Professor and Head} %HOD designation
+
+\gdef \principal{Dr. SMITHA DHARAN}
+\gdef \principaldes{The Principal}
+
+\gdef \acadyear{2025 - 26} % Academic year
+\gdef \month{August 2025} %Month of Report submission
+\gdef \date{25-08-2025} %Date of signing the declaration
+
+%*******************************************************************
+% The font pages. The source tex files are there in the folder
+\include{coverpage} %Unless essential Do not edit this tex file
+
+
+
+%%********************Certificate*******************
+
+% To print name of only the seminar coordinator 1 in the certificate page
+\include{certificate1} 
+
+% To print names of both the seminar coordinators in the certificate page
+%\include{certificate2} %Please uncomment this and comment the previous line
+
+%%***************************************************
+
+
+\include{declaration} %Unless essential Do not edit this tex file
+
+\pagenumbering{roman} 
+
+%%********************************Abstract***********************
+\include{abstract} % Please type in the abstract in this tex file abstract.tex
+
+%%***************************************************
+% Default Acknowledgement page
+\include{acknowledgement}  %Unless essential Do not edit this tex file
+
+
+%%***************************************************
+%%**If you have only one seminar coordinator faculty member
+% please comment the above line and uncomment this line
+
+%\include{acknowledgement1}  %Unless essential Do not edit this tex file
+%*******************************************************************
+
+\thispagestyle{empty}
+\newpage
+    
+%%**********************Table of Contents***********************
+\tableofcontents
+\thispagestyle{plain}
+\listoffigures
+
+%%********************Body of the report**********
+% Arabic numbering is used in the body of the report
+
+\cleardoublepage
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+%%********************Chapter 1**********
+\chapter{Introduction}
+The Internet of Things (IoT) can be broadly described as a network of interconnected devices and the technologies that enable them to communicate, share, and exchange data with one another. Within this broad spectrum of applications, Smart Home Automation (SHAuto) has emerged as one of the most popular and widely adopted domains. SHAuto refers to the utilization of IoT technology within residential environments to improve the quality of life by providing convenience, comfort, enhanced security, and better energy efficiency for home occupants.
+
+The operation of SHAuto systems relies on a wide variety of devices, ranging from smart lighting systems and HVAC (heating, ventilation, and air conditioning) controllers to entertainment systems, healthcare monitors, and security appliances. These devices, often heterogeneous in design and purpose, may generate or consume diverse forms of data, including sensitive information such as health records. They may also perform safety-critical operations like fire detection, door locking and unlocking, or home surveillance. Most devices are equipped with internet connectivity, allowing them to communicate with each other, cloud services, or user interfaces. They can generally be monitored and controlled either manually by users or automatically through pre-defined rules or intelligent automation systems. While this connectivity enhances functionality, it also introduces new risks and vulnerabilities.
+
+If compromised, smart home devices can expose sensitive data to unauthorized parties, potentially resulting in privacy violations. Worse still, they can be manipulated to perform unauthorized or harmful operations. For instance, compromised household appliances could be remotely commanded to malfunction—such as an oven being switched on or a toaster being deliberately overheated—posing not just digital threats but also serious physical dangers, including fire hazards. Similarly, unauthorized access to a smart door lock could enable criminals to monitor when occupants leave or return home, effectively turning smart devices into surveillance tools. These scenarios highlight that while security is fundamental to protecting a smart home system from unauthorized manipulation, safety is equally critical to ensuring the physical well-being of its occupants. Security is primarily about protecting the system itself, whereas safety is about protecting people; both are inseparably linked in SHAuto environments.
+
+To maintain both system integrity and occupant safety, it becomes essential to carefully regulate how devices are accessed and controlled. This is where access control mechanisms play a central role. Access control broadly includes two aspects: authentication, which verifies the identity of entities attempting to interact with the system, and authorization, which governs whether those entities are granted permission to perform specific operations or access certain resources. Authorization is therefore about granting or denying privileges to subjects in relation to system resources.
+
+Although there have been attempts to strengthen authorization frameworks for smart home systems, much of the existing work has not adequately considered device-to-device communications, which form the backbone of SHAuto. Without securing these interactions, attackers may exploit communication flows between devices to escalate privileges, intercept sensitive data, or disrupt services. Recognizing this gap, the current study undertakes a comprehensive problem analysis of SHAuto with a particular focus on device-to-device communications.
+
+The key contributions of this analysis can be summarized as follows. First, the study presents an extensive use-case analysis of SHAuto covering three main aspects: device control modes, automation modes, and communications among entities. These entities consist of devices, services, and applications that collectively enable SHAuto functionalities. Second, the study formulates a generic SHAuto model that captures a wide range of possible use-case scenarios and interactions. Third, a systematic threat analysis is carried out to identify vulnerabilities and authorization-related risks in SHAuto environments. Finally, based on the findings of this analysis, a set of functional, security, usability, and performance requirements is specified to guide the design of secure, usable, and efficient communication-based access control mechanisms for smart homes.
+
+To maintain a logical flow, the remainder of the work is structured as follows: a review of existing research on smart home security, a detailed description of SHAuto characteristics and architecture, an in-depth scenario analysis, the formulation of a generic model, the execution of a threat analysis, the specification of requirements for secure access control, and finally, a conclusion highlighting the significance of the study and directions for future work.
+
+In addition to convenience and efficiency, SHAuto systems increasingly contribute to energy conservation and sustainability. Advanced smart home solutions can monitor energy consumption in real-time, automatically adjusting lighting, heating, and cooling systems to reduce wastage and optimize utility usage. Moreover, these systems can integrate with renewable energy sources such as solar panels or battery storage units, allowing homes to better manage energy production and consumption while reducing reliance on the grid. Furthermore, the integration of artificial intelligence and machine learning enables predictive and adaptive automation, where devices can anticipate user behavior and environmental changes, providing personalized experiences while minimizing human intervention. Smart analytics can also detect anomalies in energy usage, alerting users to faulty devices or unusual consumption patterns, which enhances both efficiency and cost savings. However, this growing complexity also increases the attack surface, as more interconnected devices and dynamic behaviors create additional points of vulnerability that must be carefully managed to ensure both security and safety. In addition, the continuous collection of personal and behavioral data raises privacy concerns, making it essential for SHAuto systems to implement robust data protection mechanisms, user-centric access controls, and transparent reporting to maintain trust and compliance with regulations.
+
+ 
+%%********************Chapter 2**********
+\chapter{Literature Review}
+The rapid development of Smart Home Automation (SHAuto) has attracted considerable attention from both academia and industry, particularly regarding the security and privacy challenges posed by interconnected smart devices. Several research studies have examined security vulnerabilities in IoT and SHAuto environments, with a particular focus on authentication, authorization, data privacy, and communication protocols. This chapter reviews key works in the field and highlights the research gaps that motivate the current study.
+
+One of the most influential studies was conducted by Fernandes et al. [2], who analyzed the Samsung SmartThings platform. Their work revealed that the platform’s capability-based access control model suffered from significant flaws. Applications installed on the platform could gain access to a broader set of device privileges than necessary, leading to overprivileged entities and the risk of privilege escalation. This analysis highlighted how poorly designed access control policies could inadvertently create exploitable weaknesses in SHAuto systems.
+
+Similarly, Geneiatakis et al. [3] carried out a study focusing on privacy risks in IoT-enabled smart homes. Their work demonstrated how data collected from smart devices could be intercepted, misused, or leaked, raising serious privacy concerns for occupants. They stressed that traditional security approaches were insufficient for handling the complexity and heterogeneity of SHAuto environments, where multiple vendors, device types, and communication protocols coexist.
+
+In another contribution, Ray and Bagwari [5] proposed secure communication protocols for IoT networks, focusing on lightweight cryptographic techniques suitable for resource-constrained smart devices. Their work underscored the importance of balancing performance efficiency with robust security measures, given that many IoT devices have limited computational power, memory, and battery capacity.
+
+Girish et al. [6] further explored vulnerabilities within local home networks, where attackers could exploit weak security configurations to manipulate device-to-device communications. Their findings reinforced the idea that authorization issues extend beyond cloud and application layers, and also exist at the local device and gateway levels.
+
+Other studies have examined the human factor in smart home security. For example, some research emphasized how risk perception and user awareness play a critical role in overall system safety. Even when robust technical security mechanisms are in place, users may inadvertently weaken security through poor password practices, misconfigured permissions, or susceptibility to social engineering attacks [9], [10]. These studies underline the necessity of designing security solutions that are usable and understandable for non-technical homeowners.
+
+Despite these important contributions, significant research gaps remain. Existing studies tend to focus on individual aspects of SHAuto security, such as device vulnerabilities, protocol weaknesses, or privacy risks [2]–[8]. However, very few works comprehensively analyze device-to-device communication in SHAuto environments. Since device interconnectivity forms the backbone of automation—where one device’s event may trigger actions in multiple others—failing to secure such communications creates serious risks.
+
+This gap provides the basis for the current work, which offers a comprehensive problem analysis of SHAuto environments with emphasis on communication-based authorization. Unlike earlier works, this study systematically examines control modes, automation modes, and communication flows, and then develops a generic SHAuto model that can be used to analyze vulnerabilities and design improved access control mechanisms [1].
+
+
+%%********************Chapter 3**********
+\chapter{Methodology}
+ \section{\large Review of Existing Literature}
+The first step involved conducting a detailed review of prior research on smart home and IoT security. This included studies on access control mechanisms, authorization models, communication protocols, and user-centric security challenges. The purpose of the literature review was twofold:
+\begin{enumerate}
+   1.To identify existing approaches and limitations in securing SHAuto systems.
+\end{enumerate}
+\begin{enumerate}
+2.To highlight the research gap—specifically, the lack of focus on device-to-device communication in most prior work.
+\end{enumerate}
+
+ \section{\large Analysis of SHAuto Characteristics and Architecture}
+Following the literature review, the study analyzed the core characteristics of SHAuto environments:
+\begin{itemize}
+\item Device heterogeneity – devices from different vendors with varying communication protocols.
+
+\item Dynamic system nature – addition and removal of devices at runtime.
+
+\item Varying access needs – based on household structure, device ownership, and context.
+
+\item Sensitive data handling – personal and safety-critical information generated by devices.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{fig 1.png}
+    \caption{ SHAuto Architecture}
+    \label{fig:1}
+\end{figure}
+
+The system architecture was studied across four main layers: device, gateway, cloud, and application. Additionally, the event-driven communication model was examined to understand how actions are triggered manually or automatically within the home environment.
+
+ \section {\large Scenario-Based Use Case Analysis}
+The set of representative scenarios was constructed to better understand how SHAuto systems operate in practice. The scenarios covered:
+\begin{itemize}
+\item Device Control Modes: manual vs. automatic control.
+
+\item Automation Modes: cloud-managed, locally-managed, and hybrid automation.
+
+\item Entity Communications: interactions among devices, services, and applications, including one-to-one, one-to-many, and many-to-many communications.
+\end{itemize}
+
+This scenario-based analysis allowed the study to map out how entities interact under different conditions and where vulnerabilities may arise.
+
+
+ \section{\large Formulation of the Generic SHAuto Model (G-SHAuto)}
+
+Based on the scenario analysis, a generic model of SHAuto (G-SHAuto) was designed using a Publish/Subscribe (PubSub) communication paradigm.
+
+\begin{itemize}
+    \item Entities were categorized into Simple, Composite, and Component-level Entities (CCE).
+    
+    \item Communication flows were modeled through topics and a central broker, reflecting real-world messaging systems like MQTT.
+
+    \item The model unified diverse use-cases, providing a standard representation of entity interactions, communication patterns, and automation processes.
+\end{itemize}
+ \section{\large Threat Analysis }
+ A systematic threat analysis was carried out on the G-SHAuto model, focusing on authorization-related vulnerabilities:
+\begin{itemize}
+    \item Unconstrained Communications – Lack of strict topic-level controls could allow compromised devices to issue unauthorized commands.
+    
+    \item Overprivileged Entities – Devices, apps, or users being granted more permissions than necessary.
+\end{itemize}
+
+     Based on these vulnerabilities, two classes of authorization threats were identified:
+     \begin{itemize}
+    \item Privilege Escalation (unauthorized access or control).
+ \item Privilege Blocking (denial of legitimate access).
+
+\end{itemize}
+
+The threats were further analyzed for their impacts, including device misoperation, service disruption, information leakage, and safety risks.
+
+ 
+\section{\large Requirement Specification}
+Based on the problem analysis and threat identification, the following requirements were defined for designing secure, usable, and efficient access control mechanisms:
+
+\begin{itemize}
+    \item \textbf{Functional Requirements:} 
+        \begin{enumerate}
+            \item Support for communication-based access control.
+            \item Dynamic topic management for IoT messaging.
+            \item Real-time monitoring and logging of device activities.
+            \item Compatibility with heterogeneous devices and protocols.
+        \end{enumerate}
+    
+    \item \textbf{Security Requirements:} 
+        \begin{enumerate}
+            \item Enforcement of least privilege principle.
+            \item Fine-grained access control at device and component levels.
+            \item Mutual authentication and message integrity.
+            \item Protection against privilege escalation and blocking attacks.
+        \end{enumerate}
+
+    \item \textbf{Usability Requirements:} 
+        \begin{enumerate}
+            \item Intuitive interfaces for policy configuration.
+            \item Minimal user effort for common operations.
+            \item Clear alerts and notifications for security or safety events.
+            \item Flexible access control that adapts to different household contexts.
+        \end{enumerate}
+
+    \item \textbf{Performance Requirements:} 
+        \begin{enumerate}
+            \item Low-latency decision-making for access control.
+            \item Efficient resource usage on constrained devices.
+            \item Scalability to handle multiple devices and users.
+            \item Robust handling of errors, failures, or device disconnections.
+        \end{enumerate}
+\end{itemize}
+
+
+
+%%*********Chapter 4**************
+\chapter{Results}
+ \section{\large Device Control Mode Analysis}
+The evaluation of Smart Home Automation (SHAuto) scenarios revealed distinct patterns in device control. Manual control, enabled through user-generated events, demonstrated high reliability in simple use cases such as lighting control. However, it also introduced latency due to human involvement. In contrast, automatic control, triggered by sensor-generated events, exhibited greater efficiency in responding to real-time environmental changes.
+Figures 4.1 and 4.2 illustrate workflows of manual and automatic lighting control. Results indicate that automatic control is more effective for safety-critical applications (e.g., fire detection, smart locks), while manual control remains preferable for user-customized tasks.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{fig 2.png}
+    \caption{Automation workflow of manual lighting control use case.
+This diagram illustrates how a homeowner triggers a device through a mobile app, demonstrating user-generated events in manual control.}
+    \label{fig:2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{fig 3.png}
+    \caption{Automation workflow of automatic lighting control use case.
+The figure shows how a motion sensor triggers the lighting system without user intervention, representing sensor-generated events.}
+    \label{fig:3}
+\end{figure}
+
+ \section{\large Automation Mode Performance}
+
+Experiments comparing cloud-managed and locally-managed automation highlighted performance trade-offs:
+
+\begin{itemize}
+    \item Cloud-managed automation (Figure 4.3) provided scalability and third-party integration but introduced higher latency due to dependence on external services.
+    
+    \item Locally-managed automation (Figure 4.4) achieved faster response times, especially in gateway-managed configurations, but was limited by processing capacity of local devices.
+
+    \item AI-powered device-managed automation showed the potential to balance autonomy and personalization, as in the LG ThinQ case study.
+
+
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{fig 4.png}
+    \caption{Workflow of cloud-managed automation in SHAuto.
+It depicts how data from devices is transmitted to the cloud for processing before commands are relayed back to actuators.}
+    \label{fig:4}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{fig 5.png}
+    \caption{Workflow of gateway-managed automation.
+The figure shows how automation rules can be processed locally within a smart home gateway, reducing latency and dependence on cloud services.}
+    \label{fig:5}
+\end{figure}
+
+
+ \section{\large Entity Communication Scenarios}
+
+Twelve communication scenarios were modeled, including Sensor–Controller–Actuator interactions and Composite Entity intra-communications.
+Key findings include:
+
+\begin{itemize}
+    \item Simple Entity interactions (e.g., temperature sensor + smart AC) demonstrated predictable performance and clear data flows.
+    
+    \item Composite Entities (e.g., smart fridge with integrated camera, lock, and AI services) revealed complex intra-communications but also higher functional autonomy (Figure 4.5).
+
+    \item Communication patterns (one-to-one, many-to-one, one-to-many, many-to-many; Figure 4.6) confirmed the necessity of scalable communication protocols such as MQTT.
+
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{fig 6.png}
+    \caption{Entity communication scenarios in SHAuto.
+Illustrates interactions between sensors, controllers, actuators, and composite entities across multiple communication patterns.}
+    \label{fig:6}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{fig 7.png}
+    \caption{Communication patterns supported by the SHAuto model.
+The diagram compares one-to-one, one-to-many, many-to-one, and many-to-many communications, demonstrating scalability in PubSub-based architectures.}
+    \label{fig:7}
+\end{figure}
+
+ \section{\large Generic SHAuto Model Validation}
+
+The G-SHAuto model (Figure 18) was validated against all analyzed scenarios. Results showed that:
+
+\begin{itemize}
+    \item Publish/Subscribe (PubSub) messaging enabled seamless integration of heterogeneous devices.
+    
+    \item Topic-based filtering provided efficient handling of many-to-many communications, ensuring reduced message overhead compared to direct communication models.
+
+    \item Retained messages and persistent sessions in MQTT improved reliability, especially in dynamic environments where devices frequently join/leave.
+
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{fig 8.png}
+    \caption{The G-SHAuto Model (Generic Model of Smart Home Automation).
+The figure presents the Publish/Subscribe (PubSub) messaging framework, showing how simple entities, composite entities, and components interact via a central broker and dynamic topics.}
+    \label{fig:8}
+\end{figure}
+
+
+
+
+
+
+
+ \section{\large Threat and Vulnerability Outcomes}
+
+The threat analysis based on the G-SHAuto model identified two critical authorization-related risks:
+\begin{itemize}
+    \item Privilege Escalation – where compromised entities attempt to gain higher-level control.
+    
+    \item Privilege Blocking – where entities disrupt legitimate access.
+
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{fig 9.png}
+    \caption{Visualization of authorization threats.
+The figure summarizes two major threat classes: (1) privilege escalation and (2) privilege blocking, and shows their impact on device and communication flows.}
+    \label{fig:9}
+\end{figure}
+
+The results demonstrate that communication-governed authorization mechanisms can significantly reduce both threats by constraining data and command flows.
+%%********************Chapter 5**********
+\chapter{Discussion}
+
+The analysis of Smart Home Automation (SHAuto) presented in this study highlights both the opportunities and challenges of designing secure and usable systems. By examining device control modes, automation approaches, and communication models, it becomes evident that while SHAuto systems improve convenience, efficiency, and personalization, they also introduce unique vulnerabilities that must be addressed.
+
+One of the key findings is the distinction between manual and automatic control modes. Manual control remains essential for tasks that require user preference or direct oversight, such as entertainment systems. However, automatic control, driven by sensors and event-based triggers, is more reliable in safety-critical scenarios such as fire detection or intrusion alerts. This indicates that future SHAuto designs should employ a hybrid approach, where manual control is available but complemented with automated decision-making for rapid responses.
+
+The study also compared cloud-managed and locally-managed automation. Cloud-managed systems demonstrated greater flexibility and integration with third-party services but were more prone to latency, privacy risks, and dependence on external providers. In contrast, locally-managed systems offered faster response times and greater control but were constrained by local device capabilities. These findings suggest that hybrid architectures—combining local gateways with cloud services—may provide an optimal balance between efficiency and security.
+
+The communication scenarios evaluated in this study show that entity interactions are highly heterogeneous. Simple entity interactions (e.g., sensor to actuator) were straightforward, but composite entities introduced complex intra-communications that increased both functionality and attack surfaces. The G-SHAuto model, built upon the Publish/Subscribe (PubSub) architecture, effectively supported one-to-one, one-to-many, and many-to-many communication patterns. Results confirm that PubSub protocols such as MQTT are well-suited to SHAuto environments, offering scalability, persistence, and reduced overhead compared to direct peer-to-peer communication.
+
+Another important observation relates to authorization threats. The threat analysis identified privilege escalation and privilege blocking as particularly severe risks. These threats arise primarily because of the dynamic and heterogeneous nature of SHAuto environments, where devices frequently join, leave, or change roles. The findings underscore the necessity of fine-grained, communication-governed authorization mechanisms that restrict both data and command flows, ensuring only legitimate entities can perform critical operations.
+
+From a usability perspective, the study acknowledges that homeowners often lack security expertise. As a result, complex authorization policies may not be practical for everyday users. This highlights the need for usable security solutions, where policies are either automated, context-aware, or simplified through intuitive interfaces. The incorporation of AI-based controllers, which can learn usage patterns and enforce policies dynamically, could provide a pathway toward both security and usability.
+
+In summary, the discussion reveals three major implications:
+
+\begin{itemize}
+    \item Hybrid control and automation models are essential for balancing safety, efficiency, and personalization.
+    
+    \item Communication-based authorization mechanisms provide a viable solution to the vulnerabilities of SHAuto systems.
+
+    \item User-centric design must remain a priority to ensure that security does not compromise usability.
+
+\end{itemize}
+While the proposed G-SHAuto model successfully captures the complexities of smart home interactions, further validation through real-world deployment and large-scale testing will be critical to refine its practicality.
+
+%%********************Chapter 6**********
+\chapter{Conclusion and Future Enhancements}
+
+\textbf{Conclusion}
+
+This seminar explored the problem space of Smart Home Automation (SHAuto) with a focus on secure and usable communication-based authorization. Through a detailed analysis of device control modes, automation approaches, and communication models, the study highlighted how SHAuto environments balance convenience with security and safety challenges.
+
+The formulation of the G-SHAuto model, based on a Publish/Subscribe communication pattern, provided a generalized framework capable of representing diverse device interactions, automation modes, and communication patterns. This model validated the hypothesis that access to devices can be effectively governed by controlling communications, rather than by traditional static access control lists.
+
+Key findings can be summarized as follows:
+
+\begin{itemize}
+    \item Manual vs. Automatic Control: Automatic sensor-driven control offers efficiency and safety for critical applications, while manual control remains essential for personalized user preferences.
+
+    \item Cloud vs. Local Automation: Cloud-managed systems provide scalability but suffer from latency and privacy concerns; locally-managed systems are faster but limited in scope, making hybrid approaches most practical.
+
+    \item Entity Communications: Complex interactions among simple and composite entities demand scalable messaging protocols, with PubSub-based architectures proving highly effective.
+
+    \item Threat Analysis: Authorization-related threats, such as privilege escalation and privilege blocking, represent major risks. Communication-based access control mechanisms are necessary to mitigate these threats.
+
+\end{itemize}
+
+\textbf{Future Enhancements}
+
+While the findings of this study are promising, several avenues remain for future research and development:
+
+\begin{itemize}
+    \item Real-World Implementation:
+The G-SHAuto model should be deployed and tested in real-world smart home environments to evaluate scalability, performance, and resilience under practical conditions.
+
+    \item AI-Enhanced Authorization:
+Incorporating machine learning and AI-based controllers can enable context-aware, adaptive, and self-learning authorization mechanisms that automatically adjust to user behaviors and environmental changes.
+
+    \item Multi-Layered Security Frameworks:
+Future work should integrate authentication, encryption, and anomaly detection alongside communication-based authorization to create a holistic security framework.
+
+
+    \item User-Friendly Policy Management:
+Since most homeowners lack technical expertise, research should explore intuitive interfaces and automation tools for defining access policies, minimizing human error while maximizing usability.
+
+\item Standardization and Interoperability:
+Developing standardized authorization protocols for heterogeneous devices from different vendors will be critical for achieving interoperability and wide-scale adoption.
+
+\item Integration with Edge and Cloud Computing:
+Leveraging edge computing for latency-sensitive operations and cloud computing for large-scale analytics could further optimize SHAuto systems in hybrid deployments.
+
+\end{itemize}
+
+\begin{thebibliography}{99}
+\bibitem{}S. W. Tay, N. Zhang, and S. Aljanah, “A problem analysis of smart home automation: Toward secure and usable communication-based authorization,” IEEE Access, vol. 12, pp. 18103–18118, Jan. 2024.
+  
+  \bibitem{}E. Fernandes, J. Jung, and A. Prakash, “Security analysis of emerging smart home applications,” IEEE Symposium on Security and Privacy, pp. 636–654, 2016.
+ 
+	\bibitem{}D. Geneiatakis, I. Kounelis, R. Neisse, G. Baldini, and J. M. Hernandez-Ramos, “Security and privacy issues for an IoT-based smart home,” Information Security Journal: A Global Perspective, vol. 26, no. 1–3, pp. 67–82, 2017.
+ 
+	\bibitem{}A. Ali, M. M. Rahman, and M. A. Rahman, “A comprehensive study of IoT security issues and countermeasures,” Future Generation Computer Systems, vol. 97, pp. 819–828, Aug. 2019.
+ 
+        \bibitem{}S. Ray and A. Bagwari, “Security enhancement in IoT-based smart home communication using lightweight cryptographic techniques,” Journal of Ambient Intelligence and Humanized Computing, vol. 11, pp. 4931–4942, 2020.
+        
+        \bibitem{}N. Girish, A. S. Nair, and P. N. Mahalle, “A security analysis of local network communications in consumer smart IoT devices,” IEEE Internet of Things Journal, vol. 8, no. 10, pp. 8231–8243, May 2021.
+
+        \bibitem{}T. Li, K. Zhao, and Y. Zhang, “ZPA: Privacy and security analysis of ZigBee-based smart home networks using encrypted traffic,” IEEE Access, vol. 10, pp. 45132–45145, 2022.
+
+        \bibitem{}W. Meng, E. W. Tischhauser, Q. Wang, Y. Wang, and J. Han, “When intrusion detection meets blockchain technology: A review,” IEEE Access, vol. 6, pp. 10179–10188, 2021.
+
+        \bibitem{}G. Kavallieratos, P. Katsaros, and I. Stamelos, “Threat analysis and mitigation in smart home ecosystems using STRIDE and Microsoft’s threat modeling tool,” IEEE Access, vol. 9, pp. 10283–10298, 2021.
+
+        \bibitem{}H. Al-Masri, M. Anagnostopoulos, and M. M. Hassan, “Risk assessment of IoT systems considering human, hardware, and software vulnerabilities,” Future Internet, vol. 12, no. 6, pp. 99–115, 2020.
+
+        \bibitem{}H. Suo, J. Wan, C. Zou, and J. Liu, “Security in the Internet of Things: A review,” International Conference on Computer Science and Electronics Engineering (ICCSEE), pp. 648–651, 2012.
+
+        \bibitem{}H. Suo and J. Liu, “Security challenges and approaches in Internet of Things,” IEEE International Conference on Cyber Technology in Automation, Control, and Intelligent Systems, pp. 145–148, 2013.
+
+        \bibitem{}J. Lin and N. W. Bergmann, “IoT privacy and security challenges for smart home environments,” Information, vol. 7, no. 3, pp. 44–56, Sept. 2016.
+
+        \bibitem{}J. Lee, Y. Choi, and S. Lee, “An analysis of third-party applications and automation rules in cloud-based smart home platforms,” Sensors, vol. 20, no. 8, pp. 2304–2315, 2020.
+
+        \bibitem{}R. Khan, S. Khan, R. Zaheer, and S. Khan, “Future Internet: The Internet of Things architecture, possible applications and key challenges,” IEEE International Conference on Frontiers of Information Technology (FIT), pp. 257–260, 2012.
+
+
+   https://doi.org/10.1109/ACCESS.2024.3359442 
+   
+   https://www.earlence.com/assets/papers/smartthings_sp16.pdf
+
+      
+
+\end{thebibliography}
+
+\end{document}

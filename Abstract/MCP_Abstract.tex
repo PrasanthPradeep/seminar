@@ -1,0 +1,105 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage{mathptmx}
+\usepackage[pdftex]{graphicx}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{array}
+\captionsetup[table]{skip=10pt}
+\usepackage{titlesec}
+\usepackage{url}
+\usepackage[none]{hyphenat}
+
+\usepackage[
+bookmarks,
+colorlinks=true,
+pdfborder={0 0 0},
+pdftitle={Model Context Protocol (MCP): Architecture and Contextual Interoperability for AI Systems},
+pdfauthor={Prasanth P},
+pdfsubject={Seminar Abstract},
+pdfkeywords={Model Context Protocol, MCP, AI Agents, LLM, Security},
+linkcolor=black,
+urlcolor=blue
+]{hyperref}
+
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage{multicol}
+
+\geometry{a4paper, margin=0.75in}
+
+\pagestyle{fancy}
+
+\setlength{\headheight}{14.5pt}
+\addtolength{\topmargin}{-2.5pt}
+
+\fancyhf{}
+
+\fancyhead[L]{Model Context Protocol (MCP)}
+\fancyhead[R]{}
+\renewcommand{\headrulewidth}{1pt}
+
+\fancyfoot[L]{Dept. of CSE}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\parbox[t]{5cm}{\raggedleft\footnotesize College of Engineering\\Karunagappally}}
+\renewcommand{\footrulewidth}{1pt}
+
+\begin{document}
+
+\begin{center}
+{\Large\textbf{Abstract}}\\[0.15em]
+
+{\large\textbf{MODEL CONTEXT PROTOCOL (MCP):\\
+ARCHITECTURE AND CONTEXTUAL INTEROPERABILITY FOR AI SYSTEMS}}\\[0.15em]
+
+{\small\textit{Shyam Sundar Ramaswami, Manaswi Mishra; Ramla Bin Nayam, Junaid Iqbal Khan, et~al.;\\
+Aayush Kapoor et~al.; Tanner Burns et~al.; Fatih Ozcan et~al.;\\
+Shree Krishna Adhikari et~al.; Xingshuo Han et~al.; NSA AI Security Center}}\\[0.1em]
+
+{\small 2025--2026}
+\end{center}
+
+\vspace{0.1em}
+
+\setlength{\parskip}{2pt}
+\setlength{\parindent}{1em}
+
+\justifying
+
+Large Language Models (LLMs) are increasingly deployed as intelligent agents capable of interacting with external tools, databases, APIs, and software systems to perform complex real-world tasks. Without a unified communication standard, each integration historically required custom point-to-point implementations, resulting in fragmented and unmaintainable AI ecosystems. The Model Context Protocol (MCP), introduced by Anthropic in 2024, resolves this through an open, JSON-RPC-based standard that provides secure, interoperable, and bidirectional communication between AI models and external resources via a structured host--client--server architecture.
+
+This seminar presents a comprehensive study of MCP, examining its core components---clients, servers, tools, resources, prompts, and sampling---and demonstrating how they enable AI systems to efficiently discover and interact with external services. It further explores MCP's role in enterprise API interoperability and real-world IoT applications, including environmental monitoring systems. The study synthesises findings from ten peer-reviewed papers (2025--2026) spanning top venues including IEEE~S\&P, ACM, SPIE, Elsevier, IJCESEN, and IEEE~Xplore, employing empirical analysis, large-scale static analysis of 1,899 open-source MCP servers, adversarial red-teaming, and applied system evaluations.
+
+MCP demonstrably reduces integration complexity through its N$\times$M connection model, cutting deployment time and lowering token overhead. However, large-scale studies expose critical security vulnerabilities---Tool Poisoning, Puppet attacks, Rug-Pull, and Parasitic Toolchain Attacks---spanning 12,230 tools and 1,360 servers. Analysis of open-source MCP servers further reveals prevalent code smells, bug patterns, and maintainability deficiencies that compound security risks. Practical auditing frameworks such as MCPSafetyScanner detect a significant portion of these threats, yet governance and compliance challenges persist. MCP represents a foundational protocol for scalable, interoperable AI agent ecosystems; realising its full potential demands standardised security controls, rigorous server auditing, and clear governance frameworks, with future research encompassing dynamic trust verification, formalised sandboxing, and cross-platform compliance standards.
+
+\vspace{0.25em}
+
+\noindent{\small\textbf{References}}
+\begin{multicols}{2}
+\begin{enumerate}[leftmargin=1.5em, label={[\arabic*]}, itemsep=0pt, topsep=0pt]
+\footnotesize\sloppy
+  \item Ramaswami \& Mishra. \textit{MCP for Agentic AI: Enabling Contextual Interoperability}. \textit{IJCESEN}, Vol.~11(3), 2025.
+  \item Nayam, Khan et~al. \textit{Parasites in the Toolchain: Attacks on the MCP Ecosystem}. \textit{IEEE S\&P 2026}, pp.~138--155.
+  \item Kapoor et~al. \textit{Beyond the Protocol: Attack Vectors in the MCP Ecosystem}. \textit{IEEE Trans. Softw. Eng.}, 2026.
+  \item Burns et~al. \textit{MCP Safety Audit: LLMs Allow Major Security Exploits}. \textit{SPIE}, Vol.~14046, 2026.
+  \item Ozcan et~al. \textit{The New Interoperability Paradigm: MCP, APIs, and Agentic AI}. \textit{Computer Fraud \& Security (Elsevier)}, 2025.
+  \item Adhikari et~al. \textit{LLM-enhanced Air Quality Monitoring via MCP}. \textit{IEEE ISAECT 2025}.
+  \item Han et~al. \textit{Securing MCP-based Agent Workflows}. \textit{PACMI '25 (ACM)}, 2025.
+  \item (Authors). \textit{MCP at First Glance: Security \& Maintainability of MCP Servers}. ACM, 2026.
+  \item (Authors). \textit{MCP: Security Design Considerations for AI Automation}. NSA AI Security Center, 2026.
+  \item (Authors). \textit{MCP: Landscape, Security Threats, and Future Directions}. arXiv, 2025.
+\end{enumerate}
+\end{multicols}
+
+\begin{flushright}
+{\small\textbf{Submitted by}\\[0.15em]
+\textbf{PRASANTH P}\\[0.1em]
+\textbf{KNP23CS086}}
+\end{flushright}
+
+\end{document}

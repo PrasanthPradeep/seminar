@@ -140,7 +140,7 @@ export function Slide({ slide }: SlideProps) {
               <ul
                 className={
                   'slide-bullets' +
-                  (slide.bullets.length > 6 ? ' slide-bullets--cols' : '')
+                  (slide.bullets.length > 8 ? ' slide-bullets--cols' : '')
                 }
               >
                 {slide.bullets.map((bullet) => (

@@ -89,7 +89,7 @@
 }
 
 .slide--title .slide-title {
-  font-size: clamp(36px, 5vw, 56px);
+  font-size: clamp(44px, 6vw, 72px);
 }
 
 .slide--title .slide-tagline {
@@ -376,7 +376,7 @@
 }
 
 .slide--dense .slide-title {
-  font-size: clamp(36px, 4.6vw, 54px);
+  font-size: clamp(44px, 6vw, 72px);
   margin-bottom: 12px;
 }
 
@@ -829,6 +829,189 @@
   font-weight: 700;
   margin-right: 6px;
   font-size: 12px;
+}
+
+/* Hub diagram — LLM center, each spoke: LLM → Custom Connector → Target. */
+.diagram--hub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.d-hub-center {
+  z-index: 2;
+}
+
+.d-hub-spokes-horizontal {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 28px;
+  padding-top: 32px;
+}
+
+/* One trunk leaves the LLM, then branches once into all four connectors. */
+.d-hub-spokes-horizontal::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 4%;
+  right: 4%;
+  height: 2px;
+  background: var(--crail);
+  z-index: 0;
+}
+
+.d-hub-spokes-horizontal::after {
+  content: '';
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  width: 2px;
+  height: 60px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, var(--crail), var(--peach));
+  z-index: 0;
+}
+
+.d-hub-spoke-vertical {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.d-hub-spoke-vertical.is-active .d-node--connector,
+.d-hub-spoke-vertical.is-active .d-node--target {
+  border-color: var(--crail);
+  box-shadow: 0 0 0 3px rgba(193, 95, 60, 0.16), 0 3px 10px rgba(193, 95, 60, 0.18);
+}
+
+.d-spoke-line {
+  width: 2px;
+  height: 48px;
+  background: linear-gradient(
+    to bottom,
+    var(--crail) 0%,
+    var(--peach) 50%,
+    rgba(177, 173, 161, 0.4) 100%
+  );
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-spoke-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--crail);
+  background: var(--white);
+  padding: 2px 8px;
+  border-radius: 999px;
+  box-shadow: 0 1px 3px rgba(43, 38, 34, 0.15);
+}
+
+.d-spoke-arrow {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--crail);
+  animation: hub-arrow-flow 1.2s ease-in-out infinite;
+}
+
+.d-node--connector {
+  appearance: none;
+  font-family: inherit;
+  cursor: pointer;
+  background: var(--white);
+  border: 2px dashed rgba(193, 95, 60, 0.7);
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--crail);
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(43, 38, 34, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.d-node--connector:hover,
+.d-node--connector:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--crail);
+}
+
+.d-node--connector:focus-visible {
+  outline: 2px solid var(--peach);
+  outline-offset: 3px;
+}
+
+.d-node--target {
+  background: var(--white);
+  border: 1px solid rgba(177, 173, 161, 0.6);
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--ink);
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(43, 38, 34, 0.06);
+}
+
+@keyframes hub-arrow-flow {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: translateY(-2px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(3px);
+  }
+}
+
+.d-hub-spoke-vertical:nth-child(2) .d-spoke-arrow {
+  animation-delay: 0.15s;
+}
+
+.d-hub-spoke-vertical:nth-child(3) .d-spoke-arrow {
+  animation-delay: 0.3s;
+}
+
+.d-hub-spoke-vertical:nth-child(4) .d-spoke-arrow {
+  animation-delay: 0.45s;
+}
+
+@media (max-width: 800px) {
+  .d-hub-spokes-horizontal {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding-top: 0;
+  }
+
+  .d-hub-spokes-horizontal::before,
+  .d-hub-spokes-horizontal::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d-spoke-arrow {
+    animation: none;
+  }
 }
 
 .d-panel {

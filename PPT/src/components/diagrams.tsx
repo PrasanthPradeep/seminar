@@ -5,7 +5,6 @@ import { useState } from 'react'
  * Shared primitives live in presentation.css (.diagram, .d-node, ...).
  * Everything is static markup — crisp on projectors, zero assets, offline-safe.
  */
-
 function VArrow({ label }: { label?: string }) {
   return (
     <div className="d-arrow-v" aria-hidden="true">
@@ -15,12 +14,7 @@ function VArrow({ label }: { label?: string }) {
   )
 }
 
-/**
- * Slide 03 — M×N mesh vs M+N through one protocol.
- * Interactive: drag the M / N sliders and watch custom-link count explode
- * next to the flat MCP count. Formulas pin to the panel bottoms so M×N
- * and M+N always sit level, whatever the content above does.
- */
+/** Slide 03 — M×N mesh vs M+N through one protocol. */
 export function MxnDiagram() {
   const [agents, setAgents] = useState(5)
   const [tools, setTools] = useState(8)
@@ -35,18 +29,18 @@ export function MxnDiagram() {
         <div className="d-panel">
           <p className="d-panel-title">Without MCP</p>
           <div className="d-mesh d-mesh--live" aria-hidden="true">
-            <span>Agent A</span><i>→</i><em>custom API</em><i>→</i><span>Tool 1</span>
-            <span>Agent A</span><i>→</i><em>custom API</em><i>→</i><span>Tool 2</span>
-            <span>Agent B</span><i>→</i><em>custom API</em><i>→</i><span>Tool 1</span>
-            <span>Agent B</span><i>→</i><em>custom API</em><i>→</i><span>Tool 2</span>
+            <span>Agent A</span><i>custom</i><span>Tool 1</span>
+            <span>Agent A</span><i>custom</i><span>Tool 2</span>
+            <span>Agent B</span><i>custom</i><span>Tool 1</span>
+            <span>Agent B</span><i>custom</i><span>Tool 2</span>
           </div>
           <p className="d-formula d-formula--bad">M × N</p>
         </div>
         <div className="d-panel d-panel--accent">
           <p className="d-panel-title">With MCP</p>
           <div className="d-mesh d-mesh--clean" aria-hidden="true">
-            <span>Agents</span><i>→</i><em>MCP</em><i>→</i><span>Tools</span>
-            <span>MCP</span><i>→</i><em>protocol</em><i>→</i><span>Tools</span>
+            <span>Agents</span><i>→</i><span>MCP</span>
+            <span>MCP</span><i>→</i><span>Tools</span>
           </div>
           <p className="d-formula">M + N</p>
         </div>
@@ -90,43 +84,120 @@ export function MxnDiagram() {
   )
 }
 
-/** Slide 06 — traditional point-to-point connectors. */
+/** Slide 06 — traditional point-to-point connectors: LLM at top center,
+ *  four arrows down to Custom Connectors, each connecting to its target. */
 export function ExistingDiagram() {
+  const [activeTarget, setActiveTarget] = useState('API')
+  const targets = [
+    { connector: 'Custom Connector', target: 'API' },
+    { connector: 'Custom Connector', target: 'Database' },
+    { connector: 'Custom Connector', target: 'File System' },
+    { connector: 'Custom Connector', target: 'Application' },
+  ]
   return (
-    <div className="diagram" role="img" aria-label="An LLM connects to an API, a database, a file system, and an application through four separate custom connectors.">
-      <div className="d-node d-node--accent">LLM</div>
-      <VArrow />
-      <ul className="d-branches">
-        <li><i>custom</i> API</li>
-        <li><i>custom</i> Database</li>
-        <li><i>custom</i> File system</li>
-        <li><i>custom</i> Application</li>
-      </ul>
+    <div className="diagram diagram--hub" role="group" aria-label="Interactive diagram showing the LLM connecting through four custom connectors to API, Database, File System, and Application.">
+      <div className="d-hub-center">
+        <div className="d-node d-node--accent">LLM</div>
+      </div>
+      <div className="d-hub-spokes-horizontal">
+        {targets.map(({ connector, target }) => {
+          const isActive = activeTarget === target
+          return (
+          <div key={target} className={`d-hub-spoke-vertical${isActive ? ' is-active' : ''}`}>
+            <div className="d-spoke-line" aria-hidden="true">
+              <span className="d-spoke-arrow" aria-hidden="true">↓</span>
+            </div>
+            <button
+              type="button"
+              className="d-node d-node--connector"
+              onClick={() => setActiveTarget(target)}
+              aria-pressed={isActive}
+              aria-label={`Select ${connector} path to ${target}`}
+            >
+              {connector}
+            </button>
+            <div className="d-spoke-line" aria-hidden="true">
+              <span className="d-spoke-arrow" aria-hidden="true">↓</span>
+            </div>
+            <div className="d-node d-node--target">{target}</div>
+          </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
 
 /** Slide 09 — host / client / server architecture. */
 export function ArchitectureDiagram() {
+  const [activeLane, setActiveLane] = useState(0)
+  const lanes = [
+    {
+      server: 'MCP Server 1',
+      tools: 'Search / Execute',
+      resources: 'Files / Data',
+      external: 'APIs · Files · DB',
+    },
+    {
+      server: 'MCP Server 2',
+      tools: 'Query / Analyse',
+      resources: 'DB / Documents',
+      external: 'Services · Data',
+    },
+  ]
+
   return (
-    <div className="diagram" role="img" aria-label="MCP host containing the AI application, language model, and two clients, each client connected to an MCP server exposing tools and resources.">
-      <div className="d-host">
-        <p className="d-host-title">MCP Host — AI Application + LLM</p>
-        <div className="d-row">
-          <div className="d-col">
-            <div className="d-node">Client</div>
-            <div className="d-link" aria-hidden="true">→</div>
-            <div className="d-node d-node--server">Server 1
-              <span className="d-sub">Tools · Resources</span>
-            </div>
-          </div>
-          <div className="d-col">
-            <div className="d-node">Client</div>
-            <div className="d-link" aria-hidden="true">→</div>
-            <div className="d-node d-node--server">Server 2
-              <span className="d-sub">Tools · Resources</span>
-            </div>
-          </div>
+    <div className="diagram diagram--architecture" role="group" aria-label="Interactive MCP architecture showing a host with an AI application and language model, two clients, protocol connections, MCP servers, tools, resources, and external systems.">
+      <p className="d-architecture-title">Model Context Protocol Architecture</p>
+      <div className="d-architecture-host">
+        <p className="d-host-title">MCP Host</p>
+        <p className="d-architecture-app">AI Application + LLM</p>
+        <div className="d-architecture-lanes">
+          {lanes.map((lane, index) => {
+            const isActive = activeLane === index
+            return (
+              <div
+                key={lane.server}
+                className={`d-architecture-lane${isActive ? ' is-active' : ''}`}
+                role="button"
+                tabIndex={0}
+                onClick={() => setActiveLane(index)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    setActiveLane(index)
+                  }
+                }}
+                aria-pressed={isActive}
+                aria-label={`Select ${lane.server} connection`}
+              >
+                <div className="d-architecture-client">
+                  <strong>MCP Client</strong>
+                  <span>Connection Manager</span>
+                </div>
+                <div className="d-architecture-protocol" aria-hidden="true">
+                  <span>MCP Protocol</span>
+                  <b>↓</b>
+                </div>
+                <div className="d-architecture-server">
+                  <strong>{lane.server}</strong>
+                  <div className="d-architecture-capability">
+                    <b>Tools</b>
+                    <span>{lane.tools}</span>
+                  </div>
+                  <div className="d-architecture-capability">
+                    <b>Resources</b>
+                    <span>{lane.resources}</span>
+                  </div>
+                </div>
+                <div className="d-architecture-external">
+                  <span>↓</span>
+                  <strong>External Systems</strong>
+                  <small>{lane.external}</small>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>

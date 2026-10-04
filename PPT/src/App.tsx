@@ -1,7 +1,7 @@
 import { SLIDES, TOTAL_SLIDES } from './data/presentation'
 import { usePresentation } from './hooks/usePresentation'
 import { Slide } from './components/Slide'
-import { EdgeNavigation } from './components/EdgeNavigation'
+import { CornerNavigation } from './components/CornerNavigation'
 import { ProgressIndicator } from './components/ProgressIndicator'
 import './styles/globals.css'
 import './styles/presentation.css'
@@ -31,7 +31,7 @@ export default function App() {
           ))}
         </main>
 
-        <EdgeNavigation
+        <CornerNavigation
           current={currentSlide}
           total={TOTAL_SLIDES}
           onPrevious={previousSlide}

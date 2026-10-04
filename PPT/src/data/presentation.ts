@@ -27,7 +27,6 @@ export const SLIDES: SlideMeta[] = [
     affiliation: 'Dept. of CSE, College of Engineering Karunagappally',
     logo: 'logo/college-logo.png',
   },
-  },
   { id: 'slide-02', index: 2, title: 'Introduction', subtitle: '02 — Introduction' },
   { id: 'slide-03', index: 3, title: 'Core Concepts', subtitle: '03 — Core Concepts' },
   { id: 'slide-04', index: 4, title: 'Problem Statement', subtitle: '04 — Problem Statement' },

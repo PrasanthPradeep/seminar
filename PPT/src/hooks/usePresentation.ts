@@ -126,6 +126,19 @@ export function usePresentation(): PresentationController {
   const firstSlide = useCallback(() => goToSlide(1), [goToSlide])
   const lastSlide = useCallback(() => goToSlide(TOTAL_SLIDES), [goToSlide])
 
+  // Deterministic start: a reload always opens on slide 1, ignoring
+  // browser scroll restoration (which would otherwise leave the view on
+  // slide N while state says slide 1, breaking the first button taps).
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual'
+    }
+    container.scrollTop = 0
+    setSlide(1)
+  }, [setSlide])
+
   // A manual scroll/touch during a glide hands control back to the user
   // instead of fighting them.
   useEffect(() => {

@@ -130,9 +130,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
-  padding: 4px 48px 40px;
+  padding: 24px 48px 40px;
   overflow-y: auto;
   scrollbar-width: thin;
 }
@@ -149,6 +149,22 @@
 
 #slide-3 .slide-body {
   max-width: 1400px;
+}
+
+/* Slide 03 diagram tweaks: wider gap between panels, calculator spans
+   full panel-row width, more breathing room between row and calculator. */
+#slide-3 .diagram {
+  width: 100%;
+  margin-top: 4px;
+}
+
+#slide-3 .diagram--row {
+  gap: 40px;
+}
+
+#slide-3 .d-calc {
+  width: 100%;
+  margin-top: 28px;
 }
 
 .slide-kicker {
@@ -1209,6 +1225,328 @@
 
   .references {
     column-count: 1;
+  }
+
+  /* Diagram components */
+  .diagram {
+    margin-top: 8px;
+  }
+
+  .d-panel {
+    min-width: 0;
+    width: 100%;
+    padding: 16px 20px;
+  }
+
+  .d-panel-title {
+    font-size: 18px;
+  }
+
+  .d-mesh {
+    font-size: 16px;
+    gap: 6px 8px;
+  }
+
+  .d-mesh i {
+    font-size: 14px;
+  }
+
+  .d-mesh em {
+    font-size: 11px;
+  }
+
+  .d-formula {
+    font-size: 28px;
+    padding-top: 8px;
+  }
+
+  .d-calc {
+    padding: 14px 20px 16px;
+  }
+
+  .d-calc-controls {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .d-calc-slider {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .d-calc-results {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .d-calc-result {
+    width: 100%;
+    padding: 10px 16px;
+  }
+
+  .d-calc-vs {
+    display: none;
+  }
+
+  .d-calc-math {
+    font-size: 18px;
+  }
+
+  .d-calc-math b {
+    font-size: 26px;
+  }
+
+  .d-calc-unit {
+    font-size: 12px;
+  }
+
+  .d-calc-caption {
+    font-size: 11px;
+  }
+
+  /* Slide title scale down */
+  .slide-title {
+    font-size: clamp(32px, 7vw, 44px);
+  }
+
+  .slide-kicker {
+    font-size: 14px;
+  }
+
+  .slide-bullets {
+    font-size: clamp(17px, 3.5vw, 22px);
+    padding-left: 20px;
+  }
+
+  .slide-bullets--cols {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    padding-left: 20px;
+  }
+
+  .slide-bullets li {
+    margin-bottom: 10px;
+  }
+
+  .slide-quote {
+    font-size: clamp(17px, 3.5vw, 22px);
+    padding: 8px 16px;
+    max-width: 100%;
+  }
+
+  .slide-footnote {
+    font-size: 12px;
+  }
+
+  /* Stat chips */
+  .stat-chips {
+    gap: 8px;
+  }
+
+  .stat-chips li {
+    min-width: 0;
+    flex: 1 1 calc(50% - 4px);
+    padding: 10px 14px;
+  }
+
+  .stat-value {
+    font-size: clamp(22px, 4vw, 28px);
+  }
+
+  .stat-label {
+    font-size: 13px;
+  }
+
+  /* Primitive cards */
+  .primitive-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .primitive-cards > li {
+    padding: 12px 14px;
+  }
+
+  .primitive-cards h3 {
+    font-size: 18px;
+  }
+
+  .primitive-cards p {
+    font-size: 15px;
+  }
+
+  .primitive-cards code {
+    font-size: 13px;
+    padding: 2px 6px;
+    margin: 0 4px 4px 0;
+  }
+
+  /* Comparison columns */
+  .slide-column {
+    max-width: 100%;
+    padding: 14px 16px;
+  }
+
+  .slide-column h3 {
+    font-size: 18px;
+  }
+
+  .slide-column ul {
+    font-size: 16px;
+    padding-left: 16px;
+  }
+
+  /* Steps flow */
+  .steps-flow {
+    max-width: 100%;
+  }
+
+  .steps-flow li {
+    font-size: clamp(16px, 3vw, 20px);
+  }
+
+  .steps-num {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  /* Flow tabs */
+  .flow-tablist {
+    gap: 6px;
+  }
+
+  .flow-tablist button {
+    font-size: 15px;
+    padding: 6px 14px;
+  }
+
+  .flow-tabpanel li {
+    font-size: clamp(16px, 3vw, 20px);
+    gap: 10px;
+  }
+
+  /* Chain list */
+  .chain {
+    max-width: 100%;
+    padding: 10px 14px;
+  }
+
+  .chain h3 {
+    font-size: 17px;
+  }
+
+  .chain ol {
+    font-size: 15px;
+    padding-left: 18px;
+  }
+
+  /* Compare table */
+  .compare-table {
+    font-size: clamp(13px, 2.5vw, 17px);
+  }
+
+  .compare-table th,
+  .compare-table td {
+    padding: 8px 12px;
+  }
+
+  /* References */
+  .references {
+    font-size: clamp(13px, 2.5vw, 16px);
+    padding-left: 20px;
+    column-gap: 24px;
+  }
+
+  /* Agent flow */
+  .flow-node {
+    font-size: 15px;
+    padding: 8px 16px;
+  }
+
+  .flow-leaves li {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  /* Threat diagram */
+  .d-hop .d-node {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .d-trust em {
+    font-size: 11px;
+  }
+
+  /* Pipeline diagram */
+  .d-hop .d-node {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  /* Hub diagram */
+  .d-node--lg {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+
+  .d-sub {
+    font-size: 12px;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 480px) {
+  .slide-header {
+    padding: 28px 16px 0;
+  }
+
+  .slide-body {
+    padding: 6px 16px 20px;
+  }
+
+  .slide-title {
+    font-size: clamp(28px, 8vw, 36px);
+  }
+
+  .slide-bullets {
+    font-size: clamp(15px, 4vw, 19px);
+    padding-left: 16px;
+  }
+
+  .stat-chips li {
+    flex: 1 1 100%;
+  }
+
+  .d-panel {
+    padding: 12px 16px;
+  }
+
+  .d-mesh {
+    font-size: 14px;
+  }
+
+  .d-formula {
+    font-size: 24px;
+  }
+
+  .d-calc {
+    padding: 12px 16px 14px;
+  }
+
+  .d-calc-math {
+    font-size: 16px;
+  }
+
+  .d-calc-math b {
+    font-size: 22px;
+  }
+
+  .flow-node {
+    font-size: 13px;
+    padding: 6px 12px;
   }
 }
 

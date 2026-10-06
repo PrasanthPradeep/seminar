@@ -327,6 +327,30 @@
   min-width: 0;
 }
 
+/* Slide 15 — bullets on the left, trust-chain diagram on the right.
+   The trust chain is a tall single column, so it wants the majority of the
+   width and a narrower, tighter bullet list beside it. */
+.slide-split--threat {
+  width: 100%;
+  max-width: 1400px;
+  align-items: center;
+  gap: 40px;
+  margin-top: 0;
+}
+
+.slide-split--threat .slide-bullets {
+  flex: 0 1 auto;
+  max-width: 340px;
+  font-size: clamp(15px, 1.3vh + 0.7vw, 22px);
+  text-align: left;
+}
+
+.slide-split--threat .slide-visual {
+  flex: 1 1 60%;
+  min-width: 0;
+  max-width: 640px;
+}
+
 #slide-9 .slide-header {
   padding-top: 56px;
 }
@@ -879,6 +903,104 @@
   font-weight: 700;
   line-height: 1.2;
   margin: 3px 0;
+}
+
+.d-arrow-down {
+  color: var(--crail);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  margin: 4px 0;
+}
+
+/* Branching connector: one stem from MCP, a horizontal bar, three drops. */
+.d-branch-arrow {
+  position: relative;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.d-branch-stem {
+  display: block;
+  width: 2px;
+  height: 28px;
+  margin: 0 auto;
+  background: var(--crail);
+}
+
+.d-branch-bar {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: var(--crail);
+}
+
+.d-branch-tick {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 14px;
+  background: var(--crail);
+}
+
+.d-branch-tick:nth-child(1) {
+  left: 16.67%;
+}
+
+.d-branch-tick:nth-child(2) {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.d-branch-tick:nth-child(3) {
+  left: 83.33%;
+}
+
+/* Animated downward arrows between nodes — pulse in sequence. */
+.d-arrow-down {
+  display: block;
+  width: 2px;
+  height: 22px;
+  margin: 4px auto;
+  background: var(--crail);
+  position: relative;
+  animation: arrow-pulse 1.6s ease-in-out infinite;
+}
+
+.d-arrow-down::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid var(--crail);
+  transform: translateX(-50%);
+  animation: arrow-pulse 1.6s ease-in-out infinite;
+}
+
+.d-row--spread .d-col:nth-child(1) .d-arrow-down {
+  animation-delay: 0.3s;
+}
+
+.d-row--spread .d-col:nth-child(2) .d-arrow-down {
+  animation-delay: 0.6s;
+}
+
+.d-row--spread .d-col:nth-child(3) .d-arrow-down {
+  animation-delay: 0.9s;
+}
+
+@keyframes arrow-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .d-arrow-label {
@@ -1437,26 +1559,26 @@
   text-transform: none;
 }
 
+/* Single animated arrow from each MCP Client node down to its lane.
+   One element, one arrowhead (::after) — do not add an inner glyph. */
 .d-architecture-protocol-arrow {
   position: relative;
   width: 2px;
-  height: 46px;
-  margin-top: 2px;
-  color: var(--crail);
+  height: 34px;
   background: var(--crail);
   animation: architecture-arrow-flow 1.2s ease-in-out infinite;
 }
 
 .d-architecture-protocol-arrow::after {
-  content: '↓';
+  content: '';
   position: absolute;
-  bottom: -7px;
+  bottom: -1px;
   left: 50%;
-  color: var(--crail);
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1;
-  transform: translateX(-50%);
+  width: 9px;
+  height: 9px;
+  border-right: 3px solid var(--crail);
+  border-bottom: 3px solid var(--crail);
+  transform: translate(-50%, 2px) rotate(45deg);
 }
 
 @keyframes architecture-arrow-flow {
@@ -1637,6 +1759,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .d-architecture-protocol b,
+  .d-architecture-protocol-arrow,
   .d-architecture-external > span {
     animation: none;
   }
@@ -2716,7 +2839,8 @@
 @media (max-width: 950px) and (orientation: landscape) {
   .slide-split,
   .slide-split--architecture,
-  .slide-split--workflow {
+  .slide-split--workflow,
+  .slide-split--threat {
     flex-direction: row;
     align-items: center;
     gap: 20px;
@@ -2730,6 +2854,11 @@
   .slide-split--workflow .slide-bullets {
     flex: 0 1 26%;
     max-width: 190px;
+  }
+
+  .slide-split--threat .slide-bullets {
+    flex: 0 1 34%;
+    max-width: 240px;
   }
 
   /* The sequence diagram needs room; shrink its own metrics to match. */
@@ -2794,7 +2923,8 @@
   }
 
   .slide-split--architecture .slide-bullets,
-  .slide-split--workflow .slide-bullets {
+  .slide-split--workflow .slide-bullets,
+  .slide-split--threat .slide-bullets {
     flex: 1 1 auto;
     max-width: none;
   }

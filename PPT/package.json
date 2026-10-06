@@ -10,6 +10,7 @@
     "verify:fit": "npm run build && node scripts/serve.mjs ./verify-fit.mjs",
     "verify:swipe": "npm run build && node scripts/serve.mjs ./verify-swipe.mjs",
     "verify:mesh": "npm run build && node scripts/serve.mjs ./verify-mesh.mjs",
+    "verify:split": "npm run build && node scripts/serve.mjs ./verify-split.mjs",
     "shots": "npm run build && node scripts/serve.mjs ./shoot.mjs"
   },
   "dependencies": {

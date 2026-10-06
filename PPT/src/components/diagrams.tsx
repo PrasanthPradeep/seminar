@@ -149,14 +149,14 @@ export function ArchitectureDiagram() {
               <strong>MCP Client 1</strong>
               <span>Connection Manager</span>
             </div>
-            <div className="d-architecture-protocol-arrow" aria-hidden="true">↓</div>
+            <div className="d-architecture-protocol-arrow" aria-hidden="true" />
           </div>
           <div className="d-architecture-client-wrapper">
             <div className="d-architecture-client-header">
               <strong>MCP Client 2</strong>
               <span>Connection Manager</span>
             </div>
-            <div className="d-architecture-protocol-arrow" aria-hidden="true">↓</div>
+            <div className="d-architecture-protocol-arrow" aria-hidden="true" />
           </div>
         </div>
       </div>
@@ -279,19 +279,30 @@ export function AlgorithmDiagram() {
 /** Slide 14 — MCP hub fanning out to actions, context, workflows. */
 export function HubDiagram() {
   return (
-    <div className="diagram" role="img" aria-label="MCP at the center, branching to tools for actions, resources for context, and prompts for workflows.">
+    <div className="diagram" role="img" aria-label="MCP at the center, branching to Tools (Actions), Resources (Context), and Prompts (Workflows).">
       <div className="d-node d-node--accent d-node--lg">MCP</div>
+      <div className="d-branch-arrow" aria-hidden="true">
+        <span className="d-branch-stem" />
+        <div className="d-branch-bar">
+          <span className="d-branch-tick" />
+          <span className="d-branch-tick" />
+          <span className="d-branch-tick" />
+        </div>
+      </div>
       <div className="d-row d-row--spread">
         <div className="d-col">
           <div className="d-node">Tools</div>
+          <div className="d-arrow-down" aria-hidden="true" />
           <span className="d-sub">Actions</span>
         </div>
         <div className="d-col">
           <div className="d-node">Resources</div>
+          <div className="d-arrow-down" aria-hidden="true" />
           <span className="d-sub">Context</span>
         </div>
         <div className="d-col">
           <div className="d-node">Prompts</div>
+          <div className="d-arrow-down" aria-hidden="true" />
           <span className="d-sub">Workflows</span>
         </div>
       </div>

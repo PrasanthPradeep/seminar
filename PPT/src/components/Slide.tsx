@@ -68,6 +68,7 @@ export function Slide({ slide, isActive }: SlideProps) {
   const showSplit = slide.visual === 'agent-flow' && slide.bullets
   const showArchitectureSplit = slide.visual === 'architecture' && slide.bullets
   const showWorkflowSplit = slide.visual === 'workflow' && slide.bullets
+  const showThreatSplit = slide.visual === 'threat' && slide.bullets
   const dense =
     !!slide.table ||
     !!slide.references ||
@@ -77,7 +78,8 @@ export function Slide({ slide, isActive }: SlideProps) {
     (slide.bullets?.length ?? 0) > 6 ||
     (slide.steps?.length ?? 0) > 6 ||
     (slide.stats?.length ?? 0) > 4
-  const split = showSplit || showArchitectureSplit || showWorkflowSplit
+  const split =
+    showSplit || showArchitectureSplit || showWorkflowSplit || showThreatSplit
 
   if (isTitle) {
     return (
@@ -164,6 +166,17 @@ export function Slide({ slide, isActive }: SlideProps) {
             </ul>
             <div className="slide-visual">
               <WorkflowDiagram />
+            </div>
+          </div>
+        ) : showThreatSplit ? (
+          <div className="slide-split slide-split--threat">
+            <ul className="slide-bullets">
+              {slide.bullets!.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
+            </ul>
+            <div className="slide-visual">
+              <ThreatDiagram />
             </div>
           </div>
         ) : (

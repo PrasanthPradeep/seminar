@@ -69,6 +69,8 @@ export function Slide({ slide, isActive }: SlideProps) {
   const showArchitectureSplit = slide.visual === 'architecture' && slide.bullets
   const showWorkflowSplit = slide.visual === 'workflow' && slide.bullets
   const showThreatSplit = slide.visual === 'threat' && slide.bullets
+  const showPipelineSplit = slide.visual === 'pipeline' && slide.bullets
+  const showSamosSplit = slide.visual === 'samos' && slide.bullets
   const dense =
     !!slide.table ||
     !!slide.references ||
@@ -79,7 +81,12 @@ export function Slide({ slide, isActive }: SlideProps) {
     (slide.steps?.length ?? 0) > 6 ||
     (slide.stats?.length ?? 0) > 4
   const split =
-    showSplit || showArchitectureSplit || showWorkflowSplit || showThreatSplit
+    showSplit ||
+    showArchitectureSplit ||
+    showWorkflowSplit ||
+    showThreatSplit ||
+    showPipelineSplit ||
+    showSamosSplit
 
   if (isTitle) {
     return (
@@ -177,6 +184,31 @@ export function Slide({ slide, isActive }: SlideProps) {
             </ul>
             <div className="slide-visual">
               <ThreatDiagram />
+            </div>
+          </div>
+        ) : showPipelineSplit ? (
+          <div className="slide-split slide-split--pipeline">
+            <div className="slide-split--left">
+              <ul className="slide-bullets">
+                {slide.bullets!.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
+              {slide.stats && <StatChips stats={slide.stats} />}
+            </div>
+            <div className="slide-visual">
+              <PipelineDiagram />
+            </div>
+          </div>
+        ) : showSamosSplit ? (
+          <div className="slide-split slide-split--samos">
+            <ul className="slide-bullets">
+              {slide.bullets!.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
+            </ul>
+            <div className="slide-visual">
+              <SamosDiagram />
             </div>
           </div>
         ) : (

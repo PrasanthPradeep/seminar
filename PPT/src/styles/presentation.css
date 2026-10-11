@@ -2462,6 +2462,20 @@
     padding: 8px 24px 28px;
   }
 
+  /* Mobile: centre the whole content block in the frame and scale it about
+     its own centre. Slides are authored wide/short, so on a tall phone the
+     scaled column used to hug the top and leave a large empty band below.
+     Centring keeps the header + body balanced with equal margins, and because
+     a height-limited slide scales to exactly the frame height either way,
+     nothing is clipped or missed. */
+  .slide--content {
+    justify-content: center;
+  }
+
+  .slide-fit {
+    transform-origin: center center;
+  }
+
   .slide-split {
     flex-direction: column;
     gap: 24px;
@@ -3267,5 +3281,209 @@
 
   .step {
     padding: 6px 12px;
+  }
+}
+
+/* ==========================================================================
+   Phones — trim the tallest diagrams (both orientations) so the auto-fit
+   scale stays high and the surrounding body text stays readable.
+   ========================================================================== */
+@media (max-width: 800px) {
+  #slide-2 .flow-arrow {
+    margin: 2px 0;
+    font-size: 12px;
+  }
+
+  #slide-2 .flow-node {
+    padding: 7px 16px;
+    font-size: 14px;
+  }
+
+  #slide-2 .flow-leaves {
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  #slide-2 .flow-leaves li {
+    padding: 5px 12px;
+    font-size: 13px;
+  }
+
+  #slide-9 .d-architecture-title {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  #slide-9 .d-architecture-host {
+    padding: 8px 10px 10px;
+  }
+
+  #slide-9 .d-architecture-app {
+    margin: 8px 0 12px;
+    font-size: 14px;
+  }
+
+  #slide-9 .d-architecture-protocol {
+    min-height: 40px;
+    font-size: 12px;
+  }
+
+  #slide-9 .d-architecture-lanes {
+    gap: 14px;
+  }
+
+  #slide-9 .d-architecture-server {
+    gap: 10px;
+    padding: 10px 14px 12px;
+  }
+
+  #slide-9 .d-architecture-capability {
+    gap: 2px;
+    padding: 6px 8px;
+  }
+
+  #slide-9 .d-architecture-capability b,
+  #slide-9 .d-architecture-external strong,
+  #slide-9 .d-architecture-external small {
+    font-size: 12px;
+  }
+
+  #slide-9 .d-architecture-capability span {
+    font-size: 13px;
+  }
+
+  #slide-9 .d-architecture-external {
+    gap: 2px;
+    min-height: 38px;
+    padding-top: 6px;
+  }
+
+  #slide-9 .d-architecture-protocol b,
+  #slide-9 .d-architecture-external > span {
+    font-size: 18px;
+  }
+
+}
+
+/* ==========================================================================
+   Portrait phones — the split layouts stack vertically here, so enlarge the
+   left-hand body text, tuck it closer to its diagram, and lay slide 18 out
+   as text (left) / value boxes (centre) / diagram (right).
+   ========================================================================== */
+@media (max-width: 800px) and (orientation: portrait) {
+  /* Slide 2 — bigger body text beside the agent flow. */
+  #slide-2 .slide-split {
+    gap: 14px;
+  }
+
+  #slide-2 .slide-split .slide-bullets {
+    font-size: clamp(22px, 6vw, 27px);
+  }
+
+  /* Slide 9 — bigger body text beside the architecture diagram. */
+  #slide-9 .slide-split--architecture {
+    gap: 14px;
+  }
+
+  #slide-9 .slide-split--architecture .slide-bullets {
+    font-size: clamp(28px, 7.6vw, 36px);
+  }
+
+  /* Slides 15 & 19 — tuck the body text closer to its diagram. */
+  #slide-15 .slide-split--threat,
+  #slide-19 .slide-split--samos {
+    gap: 8px;
+  }
+
+  /* Slide 18 — stacked: body text left, boxes centred, diagram right. */
+  #slide-18 .slide-split--pipeline .slide-bullets {
+    text-align: left;
+  }
+
+  #slide-18 .slide-split--pipeline .stat-chips {
+    justify-content: center;
+  }
+
+  #slide-18 .slide-split--pipeline .slide-visual {
+    align-self: flex-end;
+  }
+}
+
+/* ==========================================================================
+   Landscape phones: the split already runs horizontally, so enlarge slide 2's
+   body text, pull the left body text right against its diagram (killing the
+   empty channel in the middle), and lay slide 18 out as three centred
+   columns: <text> | <3 value boxes> | <diagram>.
+   ========================================================================== */
+@media (max-width: 950px) and (orientation: landscape) {
+  /* Slide 2 — bigger body text beside the agent flow, pulled toward it. */
+  #slide-2 .slide-split .slide-bullets {
+    flex: 0 1 auto;
+    margin-left: auto;
+    font-size: clamp(20px, 3vw, 26px);
+  }
+
+  /* Pull the left body text right, so it sits next to the diagram instead of
+     leaving a wide empty channel in the middle. The text block shrinks to its
+     own content and is pushed right; the diagram keeps the remaining room. */
+  .slide-split--architecture .slide-bullets,
+  .slide-split--workflow .slide-bullets,
+  .slide-split--threat .slide-bullets,
+  .slide-split--pipeline .slide-bullets,
+  .slide-split--samos .slide-bullets {
+    flex: 0 1 auto;
+    margin-left: auto;
+  }
+
+  .slide-split--architecture,
+  .slide-split--workflow,
+  .slide-split--threat,
+  .slide-split--pipeline,
+  .slide-split--samos {
+    gap: 12px;
+  }
+
+  /* Slide 9 — put the two MCP server lanes side by side in landscape so the
+     diagram stays short and its scale (and text) stays large. */
+  #slide-9 .d-architecture-lanes {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* Slide 18 — <text> | <3 boxes> | <diagram> as three centred columns with
+     clear gaps between them. */
+  #slide-18 .slide-split--pipeline {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 28px;
+  }
+
+  /* Promote the bullets + value boxes to direct children of the row, so the
+     row is exactly three sections: text, boxes, diagram. */
+  #slide-18 .slide-split--pipeline .slide-split--left {
+    display: contents;
+  }
+
+  #slide-18 .slide-split--pipeline .slide-bullets {
+    flex: 0 1 auto;
+    margin: 0;
+    max-width: 210px;
+    text-align: left;
+  }
+
+  #slide-18 .slide-split--pipeline .stat-chips {
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  #slide-18 .slide-split--pipeline .slide-visual {
+    flex: 0 1 auto;
+    align-self: center;
+    margin-left: 0;
   }
 }

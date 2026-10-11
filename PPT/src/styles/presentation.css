@@ -332,6 +332,11 @@
   min-width: 0;
 }
 
+/* Slide 12 — bigger context text on the left of the workflow diagram. */
+#slide-12 .slide-split--workflow .slide-bullets {
+  font-size: clamp(18px, 1.6vh + 1vw, 25px);
+}
+
 /* Slide 15 — bullets on the left, trust-chain diagram on the right.
    The trust chain is a tall single column, so it wants the majority of the
    width and a narrower, tighter bullet list beside it. */
